@@ -1,7 +1,7 @@
 [
   {
     "id": "24305845",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Mercier-Hochelaga-Maisonneuve / Bellerive\\n825 Rue de Bruxelles #106",
+    "propertyName": "825 Rue de Bruxelles #106",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -15,7 +15,7 @@
   },
   {
     "id": "24014937",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Ville-Marie / Old Montreal\\n705 Rue William #1106",
+    "propertyName": "705 Rue William #1106",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -29,7 +29,7 @@
   },
   {
     "id": "23846044",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Ahuntsic-Cartierville / Marcelin Wilson Park\\n1600 Rue Robert-Charbonneau #101",
+    "propertyName": "1600 Rue Robert-Charbonneau #101",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -43,7 +43,7 @@
   },
   {
     "id": "21488421",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Ville-Marie / Golden Square Mile\\n3470 Rue Simpson #902",
+    "propertyName": "3470 Rue Simpson #902",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -57,13 +57,13 @@
   },
   {
     "id": "24006149",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Devonshire\\n3387 CONSERVATION DRIVE",
+    "propertyName": "3387 CONSERVATION DRIVE",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N8W5P3",
     "price": 549999.0,
-    "bedrooms": 0,
+    "bedrooms": 4,
     "bathrooms": 2,
     "numberOfStoreys": 0.0,
     "sqft": 0.0,
@@ -71,7 +71,7 @@
   },
   {
     "id": "20718146",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Rivi�re-des-Prairies-Pointe-aux-Trembles / Pointe-aux-Trembles South\\n120 Rue Gibeault",
+    "propertyName": "120 Rue Gibeault",
     "buildingType": "House",
     "city": "Montreal",
     "province": "Quebec",
@@ -85,13 +85,13 @@
   },
   {
     "id": "24006153",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / University\\n194 BRIDGE",
+    "propertyName": "194 BRIDGE",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9B2M2",
     "price": 299900.0,
-    "bedrooms": 0,
+    "bedrooms": 5,
     "bathrooms": 2,
     "numberOfStoreys": 2.0,
     "sqft": 0.0,
@@ -99,7 +99,7 @@
   },
   {
     "id": "18825639",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Le Sud-Ouest / Ville-�mard\\n5621A-D Rue Pierre-H�roux",
+    "propertyName": "5621A-D Rue Pierre-H�roux",
     "buildingType": "Fourplex",
     "city": "Montreal",
     "province": "Quebec",
@@ -113,7 +113,7 @@
   },
   {
     "id": "24006148",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Sandwich\\n0 JOHN B AVENUE",
+    "propertyName": "0 JOHN B AVENUE",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9C3G2",
@@ -126,7 +126,7 @@
   },
   {
     "id": "18510053",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Mercier-Hochelaga-Maisonneuve / Bellerive\\n320-322 Av. Meese",
+    "propertyName": "320-322 Av. Meese",
     "buildingType": "Duplex",
     "city": "Montreal",
     "province": "Quebec",
@@ -140,12 +140,12 @@
   },
   {
     "id": "24006147",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Forest Glade\\n2870 FOREST GLADE DRIVE",
+    "propertyName": "2870 FOREST GLADE DRIVE",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N8R1L3",
     "price": 449900.0,
-    "bedrooms": 0,
+    "bedrooms": 4,
     "bathrooms": 2,
     "numberOfStoreys": 0.0,
     "sqft": 0.0,
@@ -153,7 +153,7 @@
   },
   {
     "id": "24006163",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Devonshire\\n3166 RIBERDY ROAD",
+    "propertyName": "3166 RIBERDY ROAD",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
@@ -166,7 +166,7 @@
     "description": "CHECK OUT THIS NEWLY RENOVATED DETACHED BUNGALOW! FEATURING 3 SPACIOUS BEDROOMS, A 4-PIECE BATHROOM WITH STANDING SHOWER, AN OPEN-CONCEPT KITCHEN AND DINING AREA, A LARGE DRIVEWAY WITH PLENTY OF PARKING SPACE, AND A FENCED BACK YARD. THE HOME HAS BEEN DELIBERATELY DESIGNED TO PROVIDE COMFORT AND LUXURY LIVING. THIS IS A TURN-KEY INVESTMENT OPPORTUNITY WITH NEW"
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Ojibway\\n665 WEAVER RD",
+    "propertyName": "665 WEAVER RD",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9C0B4",
@@ -179,26 +179,26 @@
   },
   {
     "id": "24006103",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Walkerville\\n1743 LANGLOIS AVENUE",
+    "propertyName": "1743 LANGLOIS AVENUE",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N8X4M4",
     "price": 299900.0,
-    "bedrooms": 0,
+    "bedrooms": 3,
     "bathrooms": 2,
     "numberOfStoreys": 1.0,
     "sqft": 0.0,
     "description": "WELCOME TO 1743 LANGLOIS. THIS HOUSE IS UPDATED THROUGHOUT AND READY FOR YOU TO MOVE IN TODAY. THE HOME FEATURES 2+1 BEDROOMS, 2 FULL BATHROOMS, LIVING ROOM, OPEN CONCEPT KITCHEN AND DININGS. THIS BASEMENT HAS THE PERFECT LAYOUT FOR MULTI PURPOSE USE, AS SUITED TO YOUR FAMILY AS FAMILY ROOM OR ENSUITE BEDROOM. CLOSE TO SCHOOLS, SHOPPING AND MANY CITY AMENITIES. THE FENCED IN YARD IS LANDSCAPED, ENJOY YOUR FAMILY/FRIENDS TOGETHER ON A GOOD SUMMER DAY."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Sandwich South\\n4775 JOY RD S",
+    "propertyName": "4775 JOY RD S",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N0R1K0",
     "price": 649900.0,
-    "bedrooms": 0,
+    "bedrooms": 3,
     "bathrooms": 1,
     "numberOfStoreys": 1.5,
     "sqft": 0.0,
@@ -206,13 +206,13 @@
   },
   {
     "id": "24005647",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Roseland\\n4149 Manzanillo CRESCENT",
+    "propertyName": "4149 Manzanillo CRESCENT",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9G0A3",
     "price": 749900.0,
-    "bedrooms": 0,
+    "bedrooms": 5,
     "bathrooms": 2,
     "numberOfStoreys": 0.0,
     "sqft": 0.0,
@@ -220,7 +220,7 @@
   },
   {
     "id": "13721864",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / L\u0027�le-Bizard-Sainte-Genevi�ve / Eug�ne-Dostie Park\\n1 Rue De Blanzy",
+    "propertyName": "1 Rue De Blanzy",
     "buildingType": "House",
     "city": "Montreal",
     "province": "Quebec",
@@ -233,20 +233,20 @@
     "description": "Don\u0027t miss the opportunity to acquire this little gem! Turnkey with quick occupancy possible! All you have to do is install your furniture! This superb 4-bedroom, split-level home is perfect for any family! The 8548-square-foot lot is huge! The dead end street is very safe and offers a very good neighborhood. Located less than a minute from the Jacques Bizard Bridge and close to all services and public transit. For young families, the property is zoned for Jonathan Wilson elementary school."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Old Toronto / Harbourfront\\n#6705 -100 HARBOUR ST",
+    "propertyName": "#6705 -100 HARBOUR ST",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
     "pincode": "M5J0B5",
     "price": 699900.0,
-    "bedrooms": 1,
+    "bedrooms": 2,
     "bathrooms": 1,
     "numberOfStoreys": 0.0,
     "sqft": 0.0,
     "description": "Supreme location! Steps from lake shore, scotiabank arena, cn tower, entertainment district, banks, shops. Luxury harbour plaza residences by Menkes! Downtown living doesn\u0027t get much better this incredible 1bed + den, 1-bath suite provides the ultimate downtown living. Directly connected to the underground path system, commute as easy as can be. Separately roomed den is suitable to use as a 2nd bedroom or private home office space. 24-hour concierge, outdoor terrace w/ tanning deck, lounge areas and bbqs, as well as party, games \u0026 theatre room. Photos are taken when unit vacant for reference."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / North York / Downsview\\n83 DOMBEY RD",
+    "propertyName": "83 DOMBEY RD",
     "buildingType": "House",
     "city": "Toronto",
     "province": "Ontario",
@@ -259,7 +259,7 @@
     "description": "North York Property! walking distance to stores, TTC to downtown access, schools, and parks. Corner lot with separate walk up from basement and walk out for living room to patio."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Etobicoke / Humber Bay\\n#2707 -36 PARKLAW RD",
+    "propertyName": "#2707 -36 PARKLAW RD",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -272,7 +272,7 @@
     "description": "Modern 1 Bedroom Suite Features Chrystal Chandilers, Fresh New Paint, New Balcony Tiles, Floor to Ceiling Windows, Unobstructed Views, Laminate Throughout, 9 Ft Smooth Ceilings, Functional Layout, Italian Kitchen, Quartz Counters, European Appliances, Spacious Master Bdrm With Custom Closet, 75 Sqft Balcony W/Views Of City \u0026 Lake. Deep Laundry Rm. Fantastic Location Near The Lake, Beach, Bike Trails, Marina \u0026 Humber Bay Park. Walk To Metro, Shoppers, Cafes, Restaurants \u0026 More. Easy Access To Hwys, Ttc \u0026 Mimico Go. 24H Security, Quiet Building, Billard\u0027s Room, Gym, Party Room, Kids Room, Vistors Pass Nightly \u0026 Unlimited Day Pass, Parking \u0026 Locker.**** EXTRAS **** S/S Appliances: Blomberg Fridge, Stove, Range Hood, S/S Dishwasher; Panasonic Microwave; Blomberg Washer \u0026 Dryer. Upgraded Light Fixtures, Blinds, Bedroom Closet Organizers. Exclude: Kitchen Table, Bedroom Desk, Parking, Locker."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / North York / Emery\\n3232 WESTON RD",
+    "propertyName": "3232 WESTON RD",
     "buildingType": "House",
     "city": "Toronto",
     "province": "Ontario",
@@ -285,13 +285,13 @@
     "description": "Great opportunity for contractor or renovator. TTC bus stop at the front door. Walk to schools, neighborhood plaza, library and park. Easy access to highways. Parcel 142-1, Section M743 Part Lot 142, Plan 66M743. Lying to the N of a line drawn Wly from a point in the Ely limit, distant 34.99 ft Sly from the N Ely angle to and along the centre line of the party wall btwn the dwellings on lot in 1958 and continuing Wly to a point in the Wly Limit distant 34.91 Ft Sly from the North Wly angle subject to LT679220 TWP of York/North York, City of Toronto**** EXTRAS **** Property to be sold in \\\"\\\"As Is, Where Is Condition\\\"\\\". Seller will not respond to offers before Mar 29, 2024. Allow 72 hrs irrevocable. Seller schedules to accompany all offers. Buyers to verify taxes, rental equipment, parking and any fees."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / North York / Humber Summit\\n78 CHERRYLAWN AVE",
+    "propertyName": "78 CHERRYLAWN AVE",
     "buildingType": "House",
     "city": "Toronto",
     "province": "Ontario",
     "pincode": "M9L2B5",
     "price": 1099900.0,
-    "bedrooms": 3,
+    "bedrooms": 5,
     "bathrooms": 3,
     "numberOfStoreys": 1.0,
     "sqft": 0.0,
@@ -299,7 +299,7 @@
   },
   {
     "id": "17018607",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Ahuntsic-Cartierville / Sault-au-R�collet\\n10225-10227 Rue de Lille",
+    "propertyName": "10225-10227 Rue de Lille",
     "buildingType": "Duplex",
     "city": "Montreal",
     "province": "Quebec",
@@ -313,7 +313,7 @@
   },
   {
     "id": "18316895",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Le Sud-Ouest / Griffintown\\n1340 Rue Olier #313",
+    "propertyName": "1340 Rue Olier #313",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -326,20 +326,20 @@
     "description": "Gallery sur le Canal - ideally located in Grifintown, directly on the Lachine canal. Wonderful one closed bedroom condo with partial water views. Good sized covered balcony. Oversized bathroom. Impressive rooftop terrasse, indoor pool, spa, gym. Steps away from Grittintown\u0027s vibrant lifestyle: restaurants, bars, cafes, and boutiques."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Old Toronto / Harbourfront\\n#2906 -19 BATHURST ST",
+    "propertyName": "#2906 -19 BATHURST ST",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
     "pincode": "M5V0N2",
     "price": 678000.0,
-    "bedrooms": 0,
+    "bedrooms": 2,
     "bathrooms": 1,
     "numberOfStoreys": 0.0,
     "sqft": 0.0,
     "description": "The Really Luxurious Buildings At Toronto\u0027s TD Concord Waterfront! This North East Facing Unit Offers Stunning View Of Lake \u0026 City. It Is One of The Few Units In The Building With Enclosed Den Having Large Windows, Allowing Ample Natural Light. Elegant Marble Bathroom, Modern Open Concept Kitchen \u0026 Dining. Over 23,000 Sf Of Hotel-Style Amenities. The Building Rises Above Loblaws New 50,000Sf Flagship Store And 87,000Sf Daily Essential Retail. Steps To Lake, Transit, Schools, Restaurants, Shopping, Financial/Entertainment District, Parks And King West Village, Community Centre, Sports Arenas \u0026 More! . Easy Access To Hwy/Ttc!**** EXTRAS **** B/I Appliances"
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Old Toronto / Niagara\\n#402 -30 ORDNANCE ST",
+    "propertyName": "#402 -30 ORDNANCE ST",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -352,7 +352,7 @@
     "description": "Top 5 Reasons You\u0027ll Love This Condo: 1) It Offers 2 Beds + A Den, Spanning Well Over 800 Sq Ft. 2) Very Functional Floor Plan/Layout That Will Allow You To Do More. 3) Unobstructed Views Of the CN Tower \u0026 Toronto Skyline. 4) MASSIVE Balcony Terrace Allowing You To Enjoy The Summers Comfortably. 5) Convenient Locations Nearby To Stores, Banks, Schools, Parks \u0026 Etc."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Etobicoke / Islington City Centre West\\n#2808 -15 VIKING LANE",
+    "propertyName": "#2808 -15 VIKING LANE",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -365,7 +365,7 @@
     "description": "Rare south-facing corner luxury condo with stunning views of Lake Ontario and the CN Tower from 2 balconies! This must-see unit is situated in the highly sought-after Parc Nuvo building by Tridel. The gourmet kitchen seamlessly connects to an open-concept living dining room44boasting 9-foot ceilings and expansive windows offering breathtaking views. Conveniently located above the Kipling subway stop and steps from the GO station, this residence offers gracious city living. Top-notch amenities add to the appeal and warrant a personal viewing.**** EXTRAS **** Fridge, Stove, Dishwasher, Microwave, Washer \u0026 Dryer. Indoor Pool, Gym, Theatre, Party Room, Visitor Parking, 24Hrs Concierge. Great for families; den converted to bedroom for child"
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / North York / Humber Summit\\n#510 -2835 ISLINGTON AVE",
+    "propertyName": "#510 -2835 ISLINGTON AVE",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -378,7 +378,7 @@
     "description": "Isn\u0027t it the Cheapest and Biggest Home of 3 Beds in Toronto? Wow!! This is fully Renovated CondoWith Balcony! Across The Road From Humber River, Spacious 3-Bedrooms With 2 Baths, big Parking. FiveMinutes Walk To Rowntree Park With Walking Trails, Bike Riding And Dog Walking. Mins to Malls, Hwy\u0027s400/401/407. T.T.C. At Your Door, Amazing East Side View Exposure! This is not going to Last."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Old Toronto / Harbourfront\\n#5602 -100 HARBOUR ST",
+    "propertyName": "#5602 -100 HARBOUR ST",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -391,20 +391,20 @@
     "description": "An iconic landmark on the downtown skyline. Welcome to Harbour Plaza by Menkes! This rarely offered high floor 2-bed 2-bath corner unit boasts a breathtaking FOREVER lake and city views. Its contemporary design, sun-filled rooms create a bright and open feel. Floor to ceiling windows and 9 ft high ceiling flood this home with ample light and awe-inspiring views of the islands and the Lake. Enjoy amazing colors of the stunning sunrises and sunsets from every room and the oversized wrap around balcony. Modern kitchen w/ premier built-in Miele appliances, dishwasher, microwave, washer-dryer. Large kitchen bar. Split bedroom layout w/ no wasted space. Freshly painted. Direct access to P.A.T.H, Union Station and Go Train hub, you are minutes away from the Scotiabank Arena, financial district, shopping, restaurants, and parks. Easy access to the CN Tower, Lake, and Hwy. One premium parking spot Included. Maintenance Fee Includes TWO Pure Fitness Memberships.**** EXTRAS **** 24 Hour Concierge, Theater, Party Room, Outdoor Terrace, Business Center. Live in Luxury! Book Your Showings Today."
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / North York / Newtonbrook\\n146 PLEASANT AVE",
+    "propertyName": "146 PLEASANT AVE",
     "buildingType": "House",
     "city": "Toronto",
     "province": "Ontario",
     "pincode": "M2M1M1",
     "price": 1680000.0,
-    "bedrooms": 3,
+    "bedrooms": 6,
     "bathrooms": 3,
     "numberOfStoreys": 1.0,
     "sqft": 0.0,
     "description": "Completely Renovated! Gorgeous Full Size Kitchen Has Maple Cabinets/Granite Counters! Rich Hardwood Floors/Vinyl Csmt Windows! Separate Entrance To Large Modern Bsmt Suite-Family Room W/ Fireplace,3 Bedrooms/2Baths And Modern Kitchen! Steps To Ttc! Great For Inlaws/Students+**** EXTRAS **** All Existing Fridges, Stoves, Hood Fans, B/I Dishwasher, Washers \u0026 Dryers, All Existing Elfs, Cac, Gas Furnace \u0026 Equipment"
   },
   {
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Toronto / Toronto / Old Toronto / Bay Street Corridor\\n#4203 -11 WELLESLEY ST W",
+    "propertyName": "#4203 -11 WELLESLEY ST W",
     "buildingType": "Apartment",
     "city": "Toronto",
     "province": "Ontario",
@@ -418,13 +418,13 @@
   },
   {
     "id": "24006134",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / South Windsor\\n609 HOLBURN STREET",
+    "propertyName": "609 HOLBURN STREET",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9E0B3",
     "price": 1299900.0,
-    "bedrooms": 0,
+    "bedrooms": 5,
     "bathrooms": 4,
     "numberOfStoreys": 2.0,
     "sqft": 0.0,
@@ -432,13 +432,13 @@
   },
   {
     "id": "24006141",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / East Riverside\\n1318 CLEARWATER",
+    "propertyName": "1318 CLEARWATER",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N8P0E9",
     "price": 1149900.0,
-    "bedrooms": 0,
+    "bedrooms": 5,
     "bathrooms": 4,
     "numberOfStoreys": 2.0,
     "sqft": 0.0,
@@ -446,13 +446,13 @@
   },
   {
     "id": "24006139",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / ON / Greater Windsor / Windsor / Walkerville\\n1074 HOWARD AVENUE",
+    "propertyName": "1074 HOWARD AVENUE",
     "buildingType": "House",
     "city": "Windsor",
     "province": "Ontario",
     "pincode": "N9A1S7",
     "price": 279900.0,
-    "bedrooms": 0,
+    "bedrooms": 3,
     "bathrooms": 1,
     "numberOfStoreys": 1.0,
     "sqft": 0.0,
@@ -460,7 +460,7 @@
   },
   {
     "id": "28130092",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Mercier-Hochelaga-Maisonneuve / Mercier-Ouest / Longue-Pointe\\n6750 Rue Sherbrooke E. #109",
+    "propertyName": "6750 Rue Sherbrooke E. #109",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",
@@ -474,7 +474,7 @@
   },
   {
     "id": "25607598",
-    "propertyName": "Sign In\\nEN\\nFR\\nFind a Home\\nFind a REALTOR�\\nMortgage Calculators\\nLiving Room Blog\\nHome / QC / Greater Montr�al / Montr�al / Le Sud-Ouest / Little Burgundy\\n2444 Rue Duvernay #110",
+    "propertyName": "2444 Rue Duvernay #110",
     "buildingType": "Apartment",
     "city": "Montreal",
     "province": "Quebec",

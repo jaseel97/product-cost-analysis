@@ -3,6 +3,7 @@ package finalproject;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -67,7 +68,7 @@ public class DataFormatter {
 	private static String FindPropertyNameFromString(String jsonStringValue) {
 		String propertyName = null;
 		Pattern pattern = Pattern.compile("\\\\n(.*?)\\\\nDirections");
-	        
+
 		// Create a matcher with the long string
 		Matcher matcher = pattern.matcher(jsonStringValue);
 
@@ -75,8 +76,16 @@ public class DataFormatter {
 		if (matcher.find()) {
 			propertyName = matcher.group(1).trim(); // Group 1 captures the address
 		}
-			return propertyName;
+		String replacedString = propertyName.replaceAll("\\\\n", "|");
+
+		// Find the index of the first occurrence of the replaced character ('|') from the end of the string
+		int lastIndex = replacedString.lastIndexOf('|');
+		if (lastIndex != -1) {
+			// Extract the substring between the first occurrence of the replaced character and the end of the string
+			propertyName = replacedString.substring(lastIndex + 1).trim();
 		}
+		return propertyName;
+	}
 	
 	private static double FindPropertyPriceFromString(String jsonStringValue) {
 		String patternString = "\\$\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?";
@@ -87,8 +96,14 @@ public class DataFormatter {
         if (matcher.find()) {
             String priceStr = matcher.group();
             priceStr = priceStr.replace("$", "").replace(",", "");
-            // Convert the string to double
-            price = Double.parseDouble(priceStr);
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            try {
+                price = decimalFormat.parse(priceStr).doubleValue();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            // Convert the string to double
+//            price = Double.parseDouble(priceStr);
         } 
         return price;
 	}
@@ -118,28 +133,26 @@ public class DataFormatter {
 	}
 	
 	private static int getBedroomsAndBathrooms(String jsonStringValue, String keyword) {
-		Pattern pattern = Pattern.compile("\\\\n(\\d+)(?:\\+(\\d+))?\\\\n"+keyword);
-	    Matcher matcher = pattern.matcher(jsonStringValue);
-
-	    if (matcher.find()) {
-	        // Extract the matched substring
-	        String matchedSubstring = matcher.group(1);
-	        
-	        // If the second capturing group exists, it means there's a "+" sign and multiple numbers
-	        if (matcher.group(2) != null) {
-	            // Extract the second number and sum up the numbers
-	            int num1 = Integer.parseInt(matcher.group(1));
-	            int num2 = Integer.parseInt(matcher.group(2));
-	            return num1 + num2;
-	        } else {
-	            // If no "+" sign found, parse directly to an integer
-	            return Integer.parseInt(matchedSubstring);
-	        }
-	    }
-	    
-	    // If extraction fails or no bedrooms found, return 0
-	    return 0;
+		String extractedData = null;
+		int sum = 0;
+		int indexHash = jsonStringValue.indexOf("\\n"+keyword);
+		if (indexHash != -1) { 
+			int indexNewline = jsonStringValue.lastIndexOf('n', indexHash);
+			if (indexNewline != -1) { 
+				extractedData = jsonStringValue.substring(indexNewline + 1, indexHash);
+				if (extractedData.contains("+")) {
+					String[] parts = extractedData.split("\\+");
+					for (String part : parts) {
+						sum += Integer.parseInt(part.trim());
+					}
+				} else {
+					return Integer.parseInt(extractedData.trim());
+				}
+			}
+		}
+		return sum;
 	}
+	    
 	
 	private static String getPropertyDescription(String jsonStringValue) {
 		String propertyDescription = null;
