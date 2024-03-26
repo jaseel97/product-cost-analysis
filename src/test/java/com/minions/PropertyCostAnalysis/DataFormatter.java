@@ -3,6 +3,7 @@ package finalproject;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class DataFormatter {
                     String jsonKeyValue = entry.getKey();
                     JsonElement propertyValue = entry.getValue();
                     String propertyName = FindPropertyNameFromString(propertyValue.toString());
-                    double propertyPrice = FindPropertyPriceFromString(propertyValue.toString());
+                    BigDecimal propertyPrice = FindPropertyPriceFromString(propertyValue.toString());
                     String pincode = FindPropertyPincodeFromString(propertyValue.toString());
                     String mlsNumber = FindMLSNumberIdentifier(propertyValue.toString());
                     int bedrooms = getBedroomsAndBathrooms(propertyValue.toString(), "Bedrooms");
@@ -87,23 +88,15 @@ public class DataFormatter {
 		return propertyName;
 	}
 	
-	private static double FindPropertyPriceFromString(String jsonStringValue) {
-		String patternString = "\\$\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?";
+	private static BigDecimal FindPropertyPriceFromString(String jsonStringValue) {
+		String patternString = "\\$\\s?\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?";
 		Pattern pattern = Pattern.compile(patternString); 
         Matcher matcher = pattern.matcher(jsonStringValue);
-        double price = 0;
+        BigDecimal price = null;
         // Find and print the first match (if any)
         if (matcher.find()) {
-            String priceStr = matcher.group();
-            priceStr = priceStr.replace("$", "").replace(",", "");
-            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-            try {
-                price = decimalFormat.parse(priceStr).doubleValue();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-//            // Convert the string to double
-//            price = Double.parseDouble(priceStr);
+            String priceStr = matcher.group().replaceAll("\\$|,", "");;
+            price = new BigDecimal(priceStr);
         } 
         return price;
 	}
