@@ -3,7 +3,6 @@ package features;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,59 +11,58 @@ import java.util.Scanner;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "/Users/parvathijoshi/Documents/ACC/ACCProject/src/searchtrees/Realtor.json";
-
     public static void main(String[] args) {
         // Load JSON data
-        JSONArray properties = loadJSONData(JSON_FILE_PATH);
+        JSONArray properties = loadJSONData("/Users/parvathijoshi/Documents/ACC/PropertyCost/src/main/java/features/RealtorProperties.json");
 
         Scanner scanner = new Scanner(System.in);
         String searchTerm;
-        
         do {
-            System.out.print("Enter a city name (type 'exit' to exit): ");
+            System.out.print("Enter a city name (type 'terminate' to exit): ");
             searchTerm = scanner.nextLine().trim().toLowerCase(); // Convert to lowercase
-            if (!searchTerm.equalsIgnoreCase("exit")) {
-                updateSearchFrequency(searchTerm, properties);
-                saveJSONData(JSON_FILE_PATH, properties);
+            if (!searchTerm.equalsIgnoreCase("terminate")) {
+                int updatedFrequency = updateJSONFile(properties, searchTerm);
+                if (updatedFrequency != -1) {
+                    System.out.println("Frequency of " + searchTerm + " in Toronto properties: " + updatedFrequency);
+                } else {
+                    System.out.println("City not found!");
+                }
             }
-        } while (!searchTerm.equalsIgnoreCase("exit"));
+        } while (!searchTerm.equalsIgnoreCase("terminate"));
     }
 
     private static JSONArray loadJSONData(String filename) {
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = new JSONArray();
-        try (FileReader fileReader = new FileReader(filename)) {
-            Object obj = parser.parse(fileReader);
+        try (FileReader reader = new FileReader(filename)) {
+            Object obj = parser.parse(reader);
             jsonArray = (JSONArray) obj;
-        } catch (IOException | ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return jsonArray;
     }
 
-    private static void updateSearchFrequency(String searchTerm, JSONArray properties) {
-        boolean found = false;
+    private static int updateJSONFile(JSONArray properties, String searchTerm) {
+        int totalFrequency = 0;
         for (Object obj : properties) {
             JSONObject property = (JSONObject) obj;
-            String city = ((String) property.get("city")).toLowerCase(); // Convert to lowercase
+            String city = ((String) property.get("city")).toLowerCase();
             if (city.equals(searchTerm)) {
-                found = true;
-                int frequency = property.containsKey("search_frequency") ?
-                        ((Long) property.get("search_frequency")).intValue() : 0;
-                property.put("search_frequency", frequency + 1);
-                System.out.println("Frequency of " + searchTerm + ": " + (frequency + 1));
+                long currentFrequency = property.containsKey("search_frequency") ? (long) property.get("search_frequency") : 0;
+                property.put("search_frequency", currentFrequency + 1);
+                totalFrequency++;
             }
         }
-        if (!found) {
-            System.out.println("City not found!");
+        if (totalFrequency > 0) {
+            writeJSONFile(properties, "/Users/parvathijoshi/Documents/ACC/PropertyCost/src/main/java/features/RealtorProperties.json");
         }
+        return totalFrequency;
     }
 
-    private static void saveJSONData(String filename, JSONArray jsonArray) {
-        try (FileWriter fileWriter = new FileWriter(filename)) {
-            jsonArray.writeJSONString(fileWriter);
-            fileWriter.flush();
+    private static void writeJSONFile(JSONArray properties, String filename) {
+        try (FileWriter file = new FileWriter(filename)) {
+            file.write(properties.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
