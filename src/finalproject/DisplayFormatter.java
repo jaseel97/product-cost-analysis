@@ -44,6 +44,9 @@ public class DisplayFormatter {
         String description = propertyDetails.get("description") != null ? propertyDetails.get("description").getAsString(): null;
         System.out.println("Description: " + description);
         System.out.println();
+        int searchFrequency = propertyDetails.get("search_frequency") != null ? propertyDetails.get("search_frequency").getAsInt(): null;
+        System.out.println("This property has been searched: " + searchFrequency+" time(s)!");
+        System.out.println();
     }
 }
 
