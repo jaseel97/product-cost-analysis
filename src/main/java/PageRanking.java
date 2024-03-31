@@ -15,7 +15,7 @@ public class PageRanking {
         System.out.print("Enter the city to search for properties: ");
         String city = scanner.nextLine();
 
-        String jsonFilePath = "C:\\Users\\User\\OneDrive\\Desktop\\MAC\\property-cost-analysis\\ZoloProperties.json"; // Path to your JSON file
+        String jsonFilePath = "src/main/resources/ZoloProperties.json"; // Path to your JSON file
 
         try {
             // Parse JSON file
@@ -55,7 +55,7 @@ public class PageRanking {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error in page ranking.");
         } finally {
             scanner.close();
         }
