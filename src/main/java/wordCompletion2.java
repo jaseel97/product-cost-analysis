@@ -98,7 +98,7 @@ public class wordCompletion2 {
 
         try {
             // Parse JSON array of objects
-            JsonArray jsonArray = gson.fromJson(new FileReader("RealtorProperties.json"), JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/RealtorProperties2.json"), JsonArray.class);
             // Iterate over JSON objects
             for (JsonElement element : jsonArray) {
                 JsonObject jsonObject = element.getAsJsonObject();
@@ -107,7 +107,7 @@ public class wordCompletion2 {
                 trie.insert(city);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error in word completion!");
         }
 
         List<String> suggestions = autoCompletion(trie, inputtedString.toLowerCase());

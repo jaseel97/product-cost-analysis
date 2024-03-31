@@ -20,7 +20,7 @@ public class ZoloDataFormatter {
 
 		try {
 			//parse JSON array of objects
-			JsonArray jsonArray = gson.fromJson(new FileReader("zolo.json"), JsonArray.class);
+			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/zolo.json"), JsonArray.class);
 			//create a list to hold PropertyDetails objects
 			List<PropertyDetails> propertyList = new ArrayList<>();
 			//iterate over JSON objects
@@ -50,14 +50,14 @@ public class ZoloDataFormatter {
 
 			//Write propertyList to JSON file
 			Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
-			try (FileWriter writer = new FileWriter("ZoloProperties.json")) {
+			try (FileWriter writer = new FileWriter("src/main/resources/ZoloProperties.json")) {
 				gsonBuilder.toJson(propertyList, writer);
 				System.out.println("Property details written to ZoloProperties.json successfully.");
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Error writing zolo data to json!");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error formatting zolo data!");
 		}
 	}
 

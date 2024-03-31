@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "C:\\Users\\royce\\eclipse-workspace\\ACC_Final_Project\\RealtorProperties.json";
+    private static final String JSON_FILE_PATH = "src/main/resources/RealtorProperties2.json";
 
     public static void main(String[] args) {
         // Load JSON data
@@ -73,7 +73,7 @@ public class SearchFrequency {
                 gson.toJson(propertiesArray, writer);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error writing search frequency to json!");
         }
     }
 

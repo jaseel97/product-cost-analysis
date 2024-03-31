@@ -21,10 +21,10 @@ public class Main {
 
 		// Read JSON data into a JsonArray
 		JsonArray propertyList = null;
-		try (FileReader reader = new FileReader("RealtorProperties.json")) {
+		try (FileReader reader = new FileReader("src/main/resources/RealtorProperties2.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Realtor scraped json missing!");
 			return;
 		}
 
