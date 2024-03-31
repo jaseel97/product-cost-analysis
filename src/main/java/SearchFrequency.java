@@ -8,41 +8,10 @@ import com.google.gson.JsonParser;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "src/main/resources/RealtorProperties2.json";
-
-    public static void main(String[] args) {
-        // Load JSON data
-//        JSONArray properties = loadJSONData(JSON_FILE_PATH);
-//
-//        Scanner scanner = new Scanner(System.in);
-//        String searchTerm;
-//        
-//        do {
-//            System.out.print("Enter a city name (type 'exit' to exit): ");
-//            searchTerm = scanner.nextLine().trim().toLowerCase(); // Convert to lowercase
-//            if (!searchTerm.equalsIgnoreCase("exit")) {
-//                updateSearchFrequency(properties);
-//                saveJSONData(JSON_FILE_PATH, properties);
-//            }
-//        } while (!searchTerm.equalsIgnoreCase("exit"));
-    }
-
-//    private static JSONArray loadJSONData(String filename) {
-//        JSONParser parser = new JSONParser();
-//        JSONArray jsonArray = new JSONArray();
-//        try (FileReader fileReader = new FileReader(filename)) {
-//            Object obj = parser.parse(fileReader);
-//            jsonArray = (JSONArray) obj;
-//        } catch (IOException | ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return jsonArray;
-//    }
+    private static final String JSON_FILE_PATH = "src/main/resources/ZoloProperties.json";
 
     private static void updateSearchFrequency(JsonObject propertyDetails) {
     	int frequency = propertyDetails.get("search_frequency").getAsInt();
@@ -73,7 +42,7 @@ public class SearchFrequency {
                 gson.toJson(propertiesArray, writer);
             }
         } catch (IOException e) {
-            System.out.println("Error writing search frequency to json!");
+            System.out.println("Error writing search frequency to json");
         }
     }
 
