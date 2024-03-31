@@ -1,10 +1,5 @@
 package finalproject;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -15,41 +10,10 @@ import com.google.gson.JsonParser;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "C:\\Users\\royce\\eclipse-workspace\\ACC_Final_Project\\RealtorProperties.json";
-
-    public static void main(String[] args) {
-        // Load JSON data
-//        JSONArray properties = loadJSONData(JSON_FILE_PATH);
-//
-//        Scanner scanner = new Scanner(System.in);
-//        String searchTerm;
-//        
-//        do {
-//            System.out.print("Enter a city name (type 'exit' to exit): ");
-//            searchTerm = scanner.nextLine().trim().toLowerCase(); // Convert to lowercase
-//            if (!searchTerm.equalsIgnoreCase("exit")) {
-//                updateSearchFrequency(properties);
-//                saveJSONData(JSON_FILE_PATH, properties);
-//            }
-//        } while (!searchTerm.equalsIgnoreCase("exit"));
-    }
-
-//    private static JSONArray loadJSONData(String filename) {
-//        JSONParser parser = new JSONParser();
-//        JSONArray jsonArray = new JSONArray();
-//        try (FileReader fileReader = new FileReader(filename)) {
-//            Object obj = parser.parse(fileReader);
-//            jsonArray = (JSONArray) obj;
-//        } catch (IOException | ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return jsonArray;
-//    }
+    private static final String JSON_FILE_PATH = "C:\\Users\\User\\OneDrive\\Desktop\\MAC\\property-cost-analysis\\ZoloProperties.json";
 
     private static void updateSearchFrequency(JsonObject propertyDetails) {
     	int frequency = propertyDetails.get("search_frequency").getAsInt();

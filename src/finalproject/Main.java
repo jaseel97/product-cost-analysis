@@ -23,7 +23,7 @@ public class Main {
 
 		// Read JSON data into a JsonArray
 		JsonArray propertyList = null;
-		try (FileReader reader = new FileReader("RealtorProperties.json")) {
+		try (FileReader reader = new FileReader("ZoloProperties.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
 		} catch (Exception e) {
 			e.printStackTrace();
