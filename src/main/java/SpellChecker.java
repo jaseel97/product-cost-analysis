@@ -1,10 +1,14 @@
 import java.io.*;
 import java.util.*;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+//import org.json.simple.*;
+//import org.json.simple.parser.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 class SplayNode {
     String key;
@@ -191,12 +195,8 @@ public class SpellChecker {
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
             
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        } catch (IOException | ParseException e) {
+			System.out.println("Error loading spellchecker data");
 		}
 
         int threshold = 4; // Setting the threshold for spellchecker to 4
