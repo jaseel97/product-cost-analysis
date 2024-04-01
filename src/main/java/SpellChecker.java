@@ -4,12 +4,13 @@ import java.util.Map;
 
 import com.google.gson.*;
 
+// Node class for implementing Splay Tree
 class ImplementSplayNode {
     String spkey;
     int spkey_occurences;
     ImplementSplayNode spleftnode, sprightnode;
-    
 
+    // Constructor
     public ImplementSplayNode(String spkey) {
         this.spkey = spkey;
         this.spkey_occurences = 1;
@@ -17,10 +18,12 @@ class ImplementSplayNode {
     }
 }
 
+// Splay Tree implementation
 class ImplementSplayTree {
 
     private ImplementSplayNode sproot;
 
+    // Splay operation
     private ImplementSplayNode splay(ImplementSplayNode sproot, String wordk) {
         if (sproot == null || sproot.spkey.equals(wordk)) {
             return sproot;
@@ -61,6 +64,7 @@ class ImplementSplayTree {
         }
     }
 
+    // Right rotation
     private ImplementSplayNode rotatesprightnode(ImplementSplayNode x) {
         ImplementSplayNode y = x.spleftnode;
         x.spleftnode = y.sprightnode;
@@ -68,6 +72,7 @@ class ImplementSplayTree {
         return y;
     }
 
+    // Left rotation
     private ImplementSplayNode rotatespleftnode(ImplementSplayNode x) {
         ImplementSplayNode y = x.sprightnode;
         x.sprightnode = y.spleftnode;
@@ -75,11 +80,13 @@ class ImplementSplayTree {
         return y;
     }
 
+    // Insertion operation
     public void insert(String spkey) {
         sproot = insert(sproot, spkey);
         sproot = splay(sproot, spkey);
     }
 
+    // Recursive insertion
     private ImplementSplayNode insert(ImplementSplayNode sproot, String spkey) {
         if (sproot == null) {
             return new ImplementSplayNode(spkey);
@@ -97,6 +104,7 @@ class ImplementSplayTree {
         return sproot;
     }
 
+    // Method to suggest corrections for misspelled words
     public String suggestingCorrection(String searchWord, int EditDistThreshold) {
         EditDistResult result = new EditDistResult();
         result.dist = Integer.MAX_VALUE;
@@ -105,9 +113,9 @@ class ImplementSplayTree {
         return result.searchword;
     }
 
+    // Recursive method to find suggestions
     private void ForSuggestingWords(ImplementSplayNode sproot, String WordMisspelled, int EditDistThreshold, EditDistResult wordresult) {
         if (sproot != null) {
-        	
             ForSuggestingWords(sproot.spleftnode, WordMisspelled, EditDistThreshold, wordresult);
 
             int distance = calceditDistance(WordMisspelled, sproot.spkey.toLowerCase());
@@ -120,11 +128,13 @@ class ImplementSplayTree {
         }
     }
 
+    // Class to store result of edit distance calculation
     private static class EditDistResult {
         String searchword;
         int dist;
     }
 
+    // Method to calculate edit distance between two words
     public static int calceditDistance(String searchWord1, String searchWord2) {
         int searchWord1Len = searchWord1.length();
         int searchWord2Len = searchWord2.length();
@@ -162,22 +172,26 @@ class ImplementSplayTree {
     }
 }
 
+// Main spell checker class
 public class SpellChecker {
 
-    Map<String,ImplementSplayTree> spellings;
+    Map<String, ImplementSplayTree> spellings;
 
-    public SpellChecker(){
+    // Constructor
+    public SpellChecker() {
         spellings = new HashMap<>();
-        this.spellings.put("city",new ImplementSplayTree());
-        this.spellings.put("province",new ImplementSplayTree());
-        this.spellings.put("pincode",new ImplementSplayTree());
+        this.spellings.put("city", new ImplementSplayTree());
+        this.spellings.put("province", new ImplementSplayTree());
+        this.spellings.put("pincode", new ImplementSplayTree());
     }
 
-    public String findCorrectedSpelling(String word, String searchFactor){
-        return this.spellings.get(searchFactor).suggestingCorrection(word,3);
+    // Method to find corrected spelling
+    public String findCorrectedSpelling(String word, String searchFactor) {
+        return this.spellings.get(searchFactor).suggestingCorrection(word, 3);
     }
 
-    public void buildSpellCheckerSplayTree(){
+    // Method to build spell checker Splay Tree
+    public void buildSpellCheckerSplayTree() {
         Gson gson = new Gson();
         try {
             // Parse JSON array of objects
@@ -186,32 +200,28 @@ public class SpellChecker {
             for (JsonElement element : jsonArray) {
                 JsonObject jsonObject = element.getAsJsonObject();
                 JsonElement city = jsonObject.get("city");
+                
                 if (city != null) {
                     this.spellings.get("city").insert(city.getAsString().toLowerCase());
                 }
+                
                 JsonElement province = jsonObject.get("province");
-                if(province != null) {
+                if (province != null) {
                     this.spellings.get("province").insert(province.getAsString().toLowerCase());
                 }
+                
                 JsonElement pincode = jsonObject.get("pincode");
-                if(pincode != null) {
+                if (pincode != null) {
                     this.spellings.get("pincode").insert(pincode.getAsString().toLowerCase());
                 }
             }
-        } 
-        
-        catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-        }
-        
-        catch (IOException e) {
-            System.out.println("Error in creating spell checker!");
-        
             
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error in creating spell checker!");
         } catch (JsonParseException e) {
             System.out.println("Error parsing JSON: " + e.getMessage());
         }
-        
-        }
     }
-
+}

@@ -1,5 +1,6 @@
 import java.io.FileReader;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ public class Main {
 	static final int DISPLAY_BATCH_SIZE = 4;
 
 	public static void main(String[] args) {
-		System.out.println("\n\n------------------------------------- Property Lens -----------------------------------------------------");
+		System.out.println("\n\n------------------------------------- Welcome to Property Lens -----------------------------------------------------");
 		Gson gson = new Gson();
 
 		// Read JSON data into a JsonArray
@@ -93,7 +94,7 @@ public class Main {
 							break;
 						boolean isValidInput3 = validatePincodeInput(searchedPincode);
 						if(isValidInput3) {
-//							isValidPincodeEntered = true;
+							isValidPincodeEntered = true;
 							searchedPincode = searchedPincode.replace(" ", "");
 							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode.toLowerCase(), "pincode", wcTrie, spellChecker);
 						}
@@ -104,7 +105,7 @@ public class Main {
 				    boolean isValidLowerPriceEntered = false;
 				    do {
 				        System.out.println("\nEnter the lower price range: (Type " + BACK + " to go back to the main menu)");
-				        String lowerPriceString = inputReader.nextLine().trim();;
+				        String lowerPriceString = inputReader.nextLine().trim();
 				        if (lowerPriceString.equals(BACK))
 				            break;
 				        boolean isValidInput4 = validatePriceInput(lowerPriceString);
@@ -206,7 +207,7 @@ public class Main {
 					searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString, higherPriceString, noOfBedrooms, noOfBathrooms);
 
 				case "6":
-					System.out.println("Exiting...");
+					System.out.println("Thank You for using Property Lens!");
 					break;
 				default:
 					System.out.println("Invalid option. Please enter a valid option!");
@@ -219,13 +220,14 @@ public class Main {
 			Map<String, Integer> cityAndProvinceFrequencyCount = FrequencyCount.frequencyOfCityAndProvince(propertyList);
 	        for (Map.Entry<String, Integer> entry : cityAndProvinceFrequencyCount.entrySet()) {
 	            if (entry.getKey().equalsIgnoreCase(searchedInput)) {
-	                System.out.println("\nThere are " + entry.getValue() + " listings in " + searchedInput);
+	                System.out.println("\nThere are " + entry.getValue() + " listings in " + searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1));
 	            }
 	        }
 			Double[] metrics = PriceAnalyzer.priceMetrics.get(searchFactor).get(searchedInput);
-			System.out.printf("Average Price of properties in %s : %.2f\n",searchedInput,metrics[1]);
-			System.out.printf("Least expensive property in %s costs: %.2f\n",searchedInput,metrics[0]);
-			System.out.printf("Most expensive property in %s costs: %.2f\n",searchedInput,metrics[2]);
+			NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.CANADA);
+			System.out.println("\nAverage Price of properties in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+": "+currencyFormatter.format(metrics[1]));
+			System.out.println("Least expensive property in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+" costs: "+currencyFormatter.format(metrics[0]));
+			System.out.println("Most expensive property in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+" costs: "+currencyFormatter.format(metrics[2]));
 			JsonArray rankedList = PageRanking.rankProperties(propertyList);
 			displayInBatches(rankedList);
 			return true;
