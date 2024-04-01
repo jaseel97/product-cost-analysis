@@ -105,7 +105,7 @@ public class Main {
 				    boolean isValidLowerPriceEntered = false;
 				    do {
 				        System.out.println("\nEnter the lower price range: (Type " + BACK + " to go back to the main menu)");
-				        String lowerPriceString = inputReader.nextLine().trim();;
+				        String lowerPriceString = inputReader.nextLine().trim();
 				        if (lowerPriceString.equals(BACK))
 				            break;
 				        boolean isValidInput4 = validatePriceInput(lowerPriceString);
