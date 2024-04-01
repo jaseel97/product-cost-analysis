@@ -1,188 +1,174 @@
 import java.io.*;
-import java.util.*;
-//import org.json.simple.*;
-//import org.json.simple.parser.*;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.*;
 
-class SplayNode {
-    String key;
-    int occurrences;
-    SplayNode left, right;
+class ImplementSplayNode {
+    String spkey;
+    int spkey_occurences;
+    ImplementSplayNode spleftnode, sprightnode;
+    
 
-    public SplayNode(String key) {
-        this.key = key;
-        this.occurrences = 1;
-        this.left = this.right = null;
+    public ImplementSplayNode(String spkey) {
+        this.spkey = spkey;
+        this.spkey_occurences = 1;
+        this.spleftnode = this.sprightnode = null;
     }
 }
 
-class SplayTree {
+class ImplementSplayTree {
 
-    private SplayNode root;
+    private ImplementSplayNode sproot;
 
-    private SplayNode splay(SplayNode root, String k) {
-        if (root == null || root.key.equals(k)) {
-            return root;
+    private ImplementSplayNode splay(ImplementSplayNode sproot, String wordk) {
+        if (sproot == null || sproot.spkey.equals(wordk)) {
+            return sproot;
         }
 
-        if (k.compareTo(root.key) < 0) {
-            if (root.left == null) {
-                return root;
+        if (wordk.compareTo(sproot.spkey) < 0) {
+            if (sproot.spleftnode == null) {
+                return sproot;
             }
 
-            if (k.compareTo(root.left.key) < 0) {
-                root.left.left = splay(root.left.left, k);
-                root = rotateRight(root);
-            } else if (k.compareTo(root.left.key) > 0) {
-                root.left.right = splay(root.left.right, k);
-                if (root.left.right != null) {
-                    root.left = rotateLeft(root.left);
+            if (wordk.compareTo(sproot.spleftnode.spkey) < 0) {
+                sproot.spleftnode.spleftnode = splay(sproot.spleftnode.spleftnode, wordk);
+                sproot = rotatesprightnode(sproot);
+            } else if (wordk.compareTo(sproot.spleftnode.spkey) > 0) {
+                sproot.spleftnode.sprightnode = splay(sproot.spleftnode.sprightnode, wordk);
+                if (sproot.spleftnode.sprightnode != null) {
+                    sproot.spleftnode = rotatespleftnode(sproot.spleftnode);
                 }
             }
 
-            return (root.left == null) ? root : rotateRight(root);
+            return (sproot.spleftnode == null) ? sproot : rotatesprightnode(sproot);
 
         } else {
-            if (root.right == null) {
-                return root;
+            if (sproot.sprightnode == null) {
+                return sproot;
             }
 
-            if (k.compareTo(root.right.key) < 0) {
-                root.right.left = splay(root.right.left, k);
-                if (root.right.left != null) {
-                    root.right = rotateRight(root.right);
+            if (wordk.compareTo(sproot.sprightnode.spkey) < 0) {
+                sproot.sprightnode.spleftnode = splay(sproot.sprightnode.spleftnode, wordk);
+                if (sproot.sprightnode.spleftnode != null) {
+                    sproot.sprightnode = rotatesprightnode(sproot.sprightnode);
                 }
-            } else if (k.compareTo(root.right.key) > 0) {
-                root.right.right = splay(root.right.right, k);
-                root = rotateLeft(root);
+            } else if (wordk.compareTo(sproot.sprightnode.spkey) > 0) {
+                sproot.sprightnode.sprightnode = splay(sproot.sprightnode.sprightnode, wordk);
+                sproot = rotatespleftnode(sproot);
             }
-            return (root.right == null) ? root : rotateLeft(root);
+            return (sproot.sprightnode == null) ? sproot : rotatespleftnode(sproot);
         }
     }
 
-    private SplayNode rotateRight(SplayNode x) {
-        SplayNode y = x.left;
-        x.left = y.right;
-        y.right = x;
+    private ImplementSplayNode rotatesprightnode(ImplementSplayNode x) {
+        ImplementSplayNode y = x.spleftnode;
+        x.spleftnode = y.sprightnode;
+        y.sprightnode = x;
         return y;
     }
 
-    private SplayNode rotateLeft(SplayNode x) {
-        SplayNode y = x.right;
-        x.right = y.left;
-        y.left = x;
+    private ImplementSplayNode rotatespleftnode(ImplementSplayNode x) {
+        ImplementSplayNode y = x.sprightnode;
+        x.sprightnode = y.spleftnode;
+        y.spleftnode = x;
         return y;
     }
 
-    public void insert(String key) {
-        root = insert(root, key);
-        root = splay(root, key);
+    public void insert(String spkey) {
+        sproot = insert(sproot, spkey);
+        sproot = splay(sproot, spkey);
     }
 
-    private SplayNode insert(SplayNode root, String key) {
-        if (root == null) {
-            return new SplayNode(key);
+    private ImplementSplayNode insert(ImplementSplayNode sproot, String spkey) {
+        if (sproot == null) {
+            return new ImplementSplayNode(spkey);
         }
 
-        int cmp = key.compareTo(root.key);
+        int cmp = spkey.compareTo(sproot.spkey);
         if (cmp < 0) {
-            root.left = insert(root.left, key);
+            sproot.spleftnode = insert(sproot.spleftnode, spkey);
         } else if (cmp > 0) {
-            root.right = insert(root.right, key);
+            sproot.sprightnode = insert(sproot.sprightnode, spkey);
         } else {
-            root.occurrences++;
+            sproot.spkey_occurences++;
         }
 
-        return root;
+        return sproot;
     }
 
-    public boolean contains(String key) {
-        root = splay(root, key);
-        return root != null && root.key.equals(key);
+    public String suggestingCorrection(String searchWord, int EditDistThreshold) {
+        EditDistResult result = new EditDistResult();
+        result.dist = Integer.MAX_VALUE;
+        result.searchword = null;
+        ForSuggestingWords(sproot, searchWord, EditDistThreshold, result);
+        return result.searchword;
     }
 
-    public String suggestCorrection(String word, int threshold) {
-        EditDistanceResult result = new EditDistanceResult();
-        result.distance = Integer.MAX_VALUE;
-        result.word = null;
-        ForSuggestion(root, word, threshold, result);
-        return result.word;
-    }
-
-    private void ForSuggestion(SplayNode root, String misspelledWord, int threshold, EditDistanceResult result) {
-        if (root != null) {
+    private void ForSuggestingWords(ImplementSplayNode sproot, String WordMisspelled, int EditDistThreshold, EditDistResult wordresult) {
+        if (sproot != null) {
         	
-            ForSuggestion(root.left, misspelledWord, threshold, result);
+            ForSuggestingWords(sproot.spleftnode, WordMisspelled, EditDistThreshold, wordresult);
 
-            int distance = editDist(misspelledWord, root.key.toLowerCase());
+            int distance = calceditDistance(WordMisspelled, sproot.spkey.toLowerCase());
 
-            if (distance < result.distance && distance <= threshold) {
-                result.word = root.key;
-                result.distance = distance;
+            if (distance < wordresult.dist && distance <= EditDistThreshold) {
+                wordresult.searchword = sproot.spkey;
+                wordresult.dist = distance;
             }
-            ForSuggestion(root.right, misspelledWord, threshold, result);
+            ForSuggestingWords(sproot.sprightnode, WordMisspelled, EditDistThreshold, wordresult);
         }
     }
 
-    private static class EditDistanceResult {
-        String word;
-        int distance;
+    private static class EditDistResult {
+        String searchword;
+        int dist;
     }
 
-    public static int editDist(String w1, String w2) {
-        int l1 = w1.length();
-        int l2 = w2.length();
+    public static int calceditDistance(String searchWord1, String searchWord2) {
+        int searchWord1Len = searchWord1.length();
+        int searchWord2Len = searchWord2.length();
 
-        int[][] dp = new int[l1 + 1][l2 + 1];
+        int[][] dp = new int[searchWord1Len + 1][searchWord2Len + 1];
 
-        for (int i = 0; i <= l1; i++) {
-            dp[i][0] = i;
+        for (int itm = 0; itm <= searchWord1Len; itm++) {
+            dp[itm][0] = itm;
         }
 
-        for (int j = 0; j <= l2; j++) {
+        for (int j = 0; j <= searchWord2Len; j++) {
             dp[0][j] = j;
         }
 
-        for (int i = 0; i < l1; i++) {
-            char c1 = w1.charAt(i);
-            for (int j = 0; j < l2; j++) {
-                char c2 = w2.charAt(j);
+        for (int itm= 0; itm< searchWord1Len; itm++) {
+            char c1 = searchWord1.charAt(itm);
+            for (int j = 0; j < searchWord2Len; j++) {
+                char c2 = searchWord2.charAt(j);
 
                 if (c1 == c2) {
-                    dp[i + 1][j + 1] = dp[i][j];
+                    dp[itm+ 1][j + 1] = dp[itm][j];
                 } else {
-                    int rp = dp[i][j] + 1;
-                    int ins = dp[i][j + 1] + 1;
-                    int dele = dp[i + 1][j] + 1;
+                    int replaceDistance = dp[itm][j] + 1;
+                    int insertDistance = dp[itm][j + 1] + 1;
+                    int deleteDistance = dp[itm+ 1][j] + 1;
 
-                    int min = rp > ins ? ins : rp;
-                    min = dele > min ? min : dele;
-                    dp[i + 1][j + 1] = min;
+                    int min = replaceDistance > insertDistance ? insertDistance : replaceDistance;
+                    min = deleteDistance > min ? min : deleteDistance;
+                    dp[itm+ 1][j + 1] = min;
                 }
             }
         }
 
-        return dp[l1][l2];
+        return dp[searchWord1Len][searchWord2Len];
     }
 }
 
 public class SpellChecker {
 
-    SplayTree spellings;
+    ImplementSplayTree spellings;
     public SpellChecker(){
-        this.spellings = new SplayTree();
+        this.spellings = new ImplementSplayTree();
     }
 
     public String findCorrectedSpelling(String word){
-        return this.spellings.suggestCorrection(word,3);
+        return this.spellings.suggestingCorrection(word,3);
     }
 
     public void buildSpellCheckerSplayTree(){
@@ -210,6 +196,4 @@ public class SpellChecker {
             System.out.println("Error in creating spell checker!");
         }
     }
-    public static void main(String[] args) {}
 }
-

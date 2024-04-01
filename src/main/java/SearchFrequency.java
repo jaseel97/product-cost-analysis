@@ -1,9 +1,5 @@
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,7 +9,7 @@ import java.util.Map;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "src/main/resources/CombinedProperties.json";
+    private static final String FILE_PATH = "src/main/resources/CombinedProperties.json";
     private static final Map<String, JsonObject> propertyMap = new HashMap<>();
 
     static {
@@ -21,14 +17,14 @@ public class SearchFrequency {
     }
 
     private static void loadPropertyDetails() {
-        try (FileReader reader = new FileReader(JSON_FILE_PATH)) {
-            JsonArray propertiesArray = JsonParser.parseReader(reader).getAsJsonArray();
+        try (FileReader rd = new FileReader(FILE_PATH)) {
+            JsonArray propertiesArray = JsonParser.parseReader(rd).getAsJsonArray();
             for (JsonElement element : propertiesArray) {
                 JsonObject property = element.getAsJsonObject();
                 String propertyName = property.get("propertyName").getAsString();
                 propertyMap.put(propertyName, property);
             }
-        } catch (IOException e) {
+        } catch (IOException ep) {
             System.out.println("Error loading property details from JSON file");
         }
     }
@@ -41,7 +37,7 @@ public class SearchFrequency {
         propertyMap.put(propertyName, propertyDetails);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
+        try (FileWriter writer = new FileWriter(FILE_PATH)) {
             JsonArray propertiesArray = new JsonArray();
             for (JsonObject property : propertyMap.values()) {
                 propertiesArray.add(property);

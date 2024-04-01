@@ -59,7 +59,7 @@ public class Main {
 							break;
 						boolean isValidInput = validateStringInput(searchedCity);
 						if(isValidInput) {
-							isValidCityEntered = searchByProperty(index.get(searchedCity), searchedCity, "city", wcTrie, spellChecker);
+							isValidCityEntered = searchByProperty(index.get(searchedCity), searchedCity.toLowerCase(), "city", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid city name. Please enter a valid city with letters only.");
 					}while(!isValidCityEntered);
@@ -74,7 +74,7 @@ public class Main {
 							break;
 						boolean isValidInput2 = validateStringInput(searchedProvince);
 						if(isValidInput2) {
-							isValidProvinceEntered = searchByProperty(index.get(searchedProvince), searchedProvince, "province", wcTrie, spellChecker);
+							isValidProvinceEntered = searchByProperty(index.get(searchedProvince), searchedProvince.toLowerCase(), "province", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid province name. Please enter a valid province with letters only.");
 					}while(!isValidProvinceEntered);
@@ -90,7 +90,7 @@ public class Main {
 						if(isValidInput3) {
 //							isValidPincodeEntered = true;
 							searchedPincode = searchedPincode.replace(" ", "");
-							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode, "pincode", wcTrie, spellChecker);
+							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode.toLowerCase(), "pincode", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid Pincode. Please enter a valid Canadian postal code!");
 					} while(!isValidPincodeEntered);
