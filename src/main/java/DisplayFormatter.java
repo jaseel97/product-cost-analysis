@@ -11,7 +11,7 @@ public class DisplayFormatter {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.CANADA);
         DecimalFormat decimalFormatter = new DecimalFormat("#.#");
         decimalFormatter.setMaximumFractionDigits(1);
-        String propertyName = propertyDetails.get("propertyName") != null ? propertyDetails.get("propertyName").getAsString() : null
+        String propertyName = propertyDetails.get("propertyName") != null ? propertyDetails.get("propertyName").getAsString() : null;
         System.out.println("\nProperty Name: " + propertyName);
         String buildingType = propertyDetails.get("buildingType") != null ? propertyDetails.get("buildingType").getAsString(): null;
         System.out.println("Building Type: " + buildingType);
@@ -27,18 +27,6 @@ public class DisplayFormatter {
         System.out.println("Bedrooms: " + bedrooms);
         int bathrooms = propertyDetails.get("bathrooms") != null ? propertyDetails.get("bathrooms").getAsInt() : null;
         System.out.println("Bathrooms: " + bathrooms);
-        System.out.print("Number of Storeys: ");
-        double numberOfStoreys = propertyDetails.get("numberOfStoreys").getAsDouble();
-
-        if (numberOfStoreys % 1 == 0) {
-            // Whole number
-            System.out.println((int) numberOfStoreys);
-        } else {
-            // Decimal with value
-            System.out.println(decimalFormatter.format(numberOfStoreys));
-        }
-        System.out.println("Square Footage: " + propertyDetails.get("sqft").getAsDouble() + " sqft");
-
         String description = propertyDetails.get("description") != null ? propertyDetails.get("description").getAsString(): null;
         System.out.println("Description: " + description);
         System.out.println();
