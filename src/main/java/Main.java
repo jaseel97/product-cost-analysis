@@ -189,7 +189,7 @@ public class Main {
 			System.out.println("Could not find : "+searchedInput);
 			List<String> autoCompletedWords = wcTrie.autoCompletion(searchedInput);
 			if (autoCompletedWords.isEmpty()) {
-				String suggestion = spellChecker.findCorrectedSpelling(searchedInput);
+				String suggestion = spellChecker.findCorrectedSpelling(searchedInput,searchFactor);
 				if (suggestion != null) {
 					if(searchFactor.equals("pincode")) System.out.println("Did you mean: " + suggestion.toUpperCase());
 					else System.out.println("Did you mean: " + suggestion.substring(0, 1).toUpperCase() + suggestion.substring(1));
@@ -230,7 +230,7 @@ public class Main {
 				shown_so_far++;
 			}else {
 				System.out.println((properties.size() - shown_so_far) + " properties left");
-				System.out.print("Press enter to list more entries, !b to go back to menu : ");
+				System.out.print("Enter anything to list more entries, !b to go back to menu : ");
 				String userInput = sc.nextLine();
 				if(userInput.contains("!b")){
 					return;

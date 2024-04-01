@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.*;
 
@@ -162,13 +164,17 @@ class ImplementSplayTree {
 
 public class SpellChecker {
 
-    ImplementSplayTree spellings;
+    Map<String,ImplementSplayTree> spellings;
+
     public SpellChecker(){
-        this.spellings = new ImplementSplayTree();
+        spellings = new HashMap<>();
+        this.spellings.put("city",new ImplementSplayTree());
+        this.spellings.put("province",new ImplementSplayTree());
+        this.spellings.put("pincode",new ImplementSplayTree());
     }
 
-    public String findCorrectedSpelling(String word){
-        return this.spellings.suggestingCorrection(word,3);
+    public String findCorrectedSpelling(String word, String searchFactor){
+        return this.spellings.get(searchFactor).suggestingCorrection(word,3);
     }
 
     public void buildSpellCheckerSplayTree(){
@@ -181,15 +187,15 @@ public class SpellChecker {
                 JsonObject jsonObject = element.getAsJsonObject();
                 JsonElement city = jsonObject.get("city");
                 if (city != null) {
-                    this.spellings.insert(city.getAsString().toLowerCase());
+                    this.spellings.get("city").insert(city.getAsString().toLowerCase());
                 }
                 JsonElement province = jsonObject.get("province");
                 if(province != null) {
-                    this.spellings.insert(province.getAsString().toLowerCase());
+                    this.spellings.get("province").insert(province.getAsString().toLowerCase());
                 }
                 JsonElement pincode = jsonObject.get("pincode");
                 if(pincode != null) {
-                    this.spellings.insert(pincode.getAsString().toLowerCase());
+                    this.spellings.get("pincode").insert(pincode.getAsString().toLowerCase());
                 }
             }
         } catch (IOException e) {
