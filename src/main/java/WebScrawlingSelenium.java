@@ -1,5 +1,3 @@
-package webcrawling;
-
 import java.io.FileWriter;
 import java.time.Duration;
 import java.util.*;
