@@ -11,7 +11,7 @@ public class DisplayFormatter {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.CANADA);
         DecimalFormat decimalFormatter = new DecimalFormat("#.#");
         decimalFormatter.setMaximumFractionDigits(1);
-        String propertyName = propertyDetails.get("propertyName") != null ? propertyDetails.get("propertyName").getAsString() : null
+        String propertyName = propertyDetails.get("propertyName") != null ? propertyDetails.get("propertyName").getAsString() : null;
         System.out.println("\nProperty Name: " + propertyName);
         String buildingType = propertyDetails.get("buildingType") != null ? propertyDetails.get("buildingType").getAsString(): null;
         System.out.println("Building Type: " + buildingType);

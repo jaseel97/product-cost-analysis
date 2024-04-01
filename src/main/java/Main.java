@@ -24,9 +24,12 @@ public class Main {
 		try (FileReader reader = new FileReader("src/main/resources/RealtorProperties2.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
 		} catch (Exception e) {
-			System.out.println("Realtor scraped json missing!");
+			System.out.println("error : could not find json with scraped property data!");
 			return;
 		}
+
+		InvertedIndex index = new InvertedIndex();
+		index.buildIndexFromJSON(propertyList);
 
 		Scanner inputReader = new Scanner(System.in);
 		String searchOption;
@@ -34,7 +37,7 @@ public class Main {
 			System.out.println("\n\nSelect search option:");
 			System.out.println("\n1. Search by City");
 			System.out.println("2. Search by Province");
-			System.out.println("3. Search by Pincode");
+			System.out.println("3. Search by ZIP Code");
 			System.out.println("4. Search with Price Range");
 			System.out.println("5. Search with City, Price Range, Number of Bedrooms & Bathrooms");
 			System.out.println("6. Exit");
@@ -45,7 +48,7 @@ public class Main {
 				System.out.println("\nEnter city:");
 				String searchedCity = inputReader.nextLine();
 				boolean isValidInput = validateStringInput(searchedCity);
-				if(isValidInput) 
+				if(isValidInput)
 					searchByProperty(propertyList, searchedCity, "city");
 				else
 					System.out.println("Invalid city name. Please enter a valid city with letters only.");
@@ -54,7 +57,7 @@ public class Main {
 				System.out.println("\nEnter province:");
 				String searchedProvince = inputReader.nextLine();
 				boolean isValidInput2 = validateStringInput(searchedProvince);
-				if(isValidInput2) 
+				if(isValidInput2)
 					searchByProperty(propertyList, searchedProvince, "province");
 				else
 					System.out.println("Invalid province name. Please enter a valid province with letters only.");
@@ -160,7 +163,7 @@ public class Main {
 	        	System.out.print("Did you mean: ");
 	        	//To print word alone if single suggestion
 	        	if (autoCompletedWords.size() == 1) {
-	        	    String completedWord = autoCompletedWords.get(0);
+	        	    String completedWord = autoCompletedWords.getFirst();
 	        	    System.out.println(completedWord.substring(0, 1).toUpperCase() + completedWord.substring(1));
 	        	} else {
 	        		// to print words separated by a comma if multiple suggestions are present

@@ -12,7 +12,7 @@
     "bathrooms": 3,
     "sqft": 2800,
     "description": "Beautiful house with stunning views of the lake, spacious rooms, and a cozy fireplace.",
-    "searches": 0
+    "image": "https://example.com/lakeview_retreat.jpg"
   },
   {
     "id": 2,
@@ -27,7 +27,7 @@
     "bathrooms": 2,
     "sqft": 1200,
     "description": "Modern condo in the heart of downtown with access to amenities and breathtaking city views.",
-    "searches": 0
+    "image": "https://example.com/downtown_condo.jpg"
   },
   {
     "id": 3,
@@ -42,7 +42,7 @@
     "bathrooms": 2,
     "sqft": 1800,
     "description": "Quaint cottage with a riverside view, perfect for a peaceful retreat.",
-    "searches": 0
+    "image": "https://example.com/riverside_cottage.jpg"
   },
   {
     "id": 4,
@@ -57,7 +57,7 @@
     "bathrooms": 4,
     "sqft": 3500,
     "description": "Luxurious chalet nestled in the mountains, featuring ski-in/ski-out access and a hot tub.",
-    "searches": 0
+    "image": "https://example.com/mountain_chalet.jpg"
   },
   {
     "id": 5,
@@ -72,7 +72,7 @@
     "bathrooms": 2,
     "sqft": 2000,
     "description": "Elegant house with a lush garden, perfect for outdoor entertaining and relaxation.",
-    "searches": 0
+    "image": "https://example.com/garden_oasis.jpg"
   },
   {
     "id": 6,
@@ -87,6 +87,6 @@
     "bathrooms": 2,
     "sqft": 1500,
     "description": "Chic loft space in a vibrant urban neighborhood, featuring high ceilings and industrial accents.",
-    "searches": 0
+    "image": "https://example.com/urban_loft.jpg"
   }
 ]

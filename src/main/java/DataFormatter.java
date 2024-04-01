@@ -22,6 +22,7 @@ public class DataFormatter {
 		try {
 			//parse JSON array of objects
 			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/realtor (3).json"), JsonArray.class);
+			
 			//create a list to hold PropertyDetails objects
 			List<PropertyDetails> propertyList = new ArrayList<>();
 			//iterate over JSON objects
