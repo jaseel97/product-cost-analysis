@@ -1,111 +1,52 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.math.BigDecimal;
+import java.util.PriorityQueue;
 
 public class PageRanking {
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter the city to search for properties: ");
-        String city = scanner.nextLine();
-
-        String jsonFilePath = "src/main/resources/CombinedProperties.json"; // Path to your JSON file
-
-        try {
-            // Parse JSON file
-            JSONParser parser = new JSONParser();
-            JSONArray properties = (JSONArray) parser.parse(new FileReader(jsonFilePath));
-
-            // Filter properties by city
-            List<JSONObject> cityProperties = new ArrayList<>();
-            for (Object obj : properties) {
-                JSONObject property = (JSONObject) obj;
-                if (property.get("city").equals(city)) {
-                    cityProperties.add(property);
-                }
-            }
-
-            // Convert list to array for heap sort
-            JSONObject[] propertiesArray = new JSONObject[cityProperties.size()];
-            cityProperties.toArray(propertiesArray);
-
-            // Sort properties by search frequency and then by price using heap sort
-            heapSort(propertiesArray);
-
-            // Output ranked properties
-            if (propertiesArray.length > 0) {
-                System.out.println("Ranked properties in " + city + ":");
-                for (JSONObject property : propertiesArray) {
-                    System.out.println("Property Name: " + property.get("propertyName"));
-                    System.out.println("Price: $" + property.get("price"));
-                    System.out.println("Bedrooms: " + property.get("bedrooms"));
-                    System.out.println("Bathrooms: " + property.get("bathrooms"));
-                    System.out.println("Description: " + property.get("description"));
-                    System.out.println("Search Frequency: " + property.get("search_frequency"));
-                    System.out.println();
-                }
-            } else {
-                System.out.println("No properties found in " + city);
-            }
-
+	public static void main(String [] args) throws Exception, JsonIOException, FileNotFoundException {
+        Gson gson = new Gson();
+        JsonArray propertyList = null;
+        try (FileReader reader = new FileReader("src/main/resources/CombinedProperties.json")) {
+            propertyList = gson.fromJson(reader, JsonArray.class);
         } catch (Exception e) {
-            System.out.println("Error in page ranking.");
-        } finally {
-            scanner.close();
+            System.out.println("Error : Could not find json with scraped property data!");
+            return;
         }
-    }
+        InvertedIndex index = new InvertedIndex();
+        index.buildIndexFromJSON(propertyList);
 
-    // Heap sort implementation
-    private static void heapSort(JSONObject[] arr) {
-        int n = arr.length;
-
-        // Build max heap
-        for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(arr, n, i);
+        JsonArray rankedProperties = PageRanking.rankProperties(index.get("toronto"));
+        int ctr = 0;
+        while (ctr < Math.min(20,rankedProperties.size())){
+            System.out.println(rankedProperties.get(ctr).toString());
+            ctr++;
         }
-
-        // Heap sort
-        for (int i = n - 1; i > 0; i--) {
-            // Swap root (max element) with the last element
-            JSONObject temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
-
-            // Heapify root element
-            heapify(arr, i, 0);
+	}
+	public static JsonArray rankProperties(JsonArray allProperties) {
+        JsonArray rankedProperties = new JsonArray();
+        PriorityQueue<JsonObject> heap = new PriorityQueue<>(allProperties.size(), (x, y) -> {
+            int searchFreqX = x.get("search_frequency").getAsInt();
+            int searchFreqY = y.get("search_frequency").getAsInt();
+            if (searchFreqY != searchFreqX) {
+                return searchFreqY - searchFreqX;
+            }
+            BigDecimal priceX = x.get("price").getAsBigDecimal();
+            BigDecimal priceY = y.get("price").getAsBigDecimal();
+            return priceX.compareTo(priceY);
+        });
+        for(JsonElement property : allProperties) {
+            heap.add(property.getAsJsonObject());
         }
-    }
-
-    // To heapify a subtree rooted with node i which is an index in arr[]
-    private static void heapify(JSONObject[] arr, int n, int i) {
-        int largest = i; // Initialize largest as root
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
-
-        // If left child is larger than root
-        if (left < n && Long.parseLong(arr[left].get("search_frequency").toString()) > Long.parseLong(arr[largest].get("search_frequency").toString())) {
-            largest = left;
+        while(!heap.isEmpty()){
+            rankedProperties.add(heap.remove());
         }
-
-        // If right child is larger than largest so far
-        if (right < n && Long.parseLong(arr[right].get("search_frequency").toString()) > Long.parseLong(arr[largest].get("search_frequency").toString())) {
-            largest = right;
-        }
-
-        // If largest is not root
-        if (largest != i) {
-            JSONObject swap = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = swap;
-
-            // Recursively heapify the affected sub-tree
-            heapify(arr, n, largest);
-        }
+        return rankedProperties;
     }
 }

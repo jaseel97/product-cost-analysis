@@ -181,7 +181,8 @@ public class Main {
 	                System.out.println("There are " + entry.getValue() + " listings in " + searchedInput);
 	            }
 	        }
-			for (JsonElement element : propertyList) {
+			JsonArray rankedList = PageRanking.rankProperties(propertyList);
+			for (JsonElement element : rankedList) {
 				JsonObject property = element.getAsJsonObject();
 				SearchFrequency.call(property);
 				DisplayFormatter.printPropertyDetails(property);
