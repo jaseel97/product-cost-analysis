@@ -162,7 +162,7 @@ public class Main {
 	        	System.out.print("Did you mean: ");
 	        	//To print word alone if single suggestion
 	        	if (autoCompletedWords.size() == 1) {
-	        	    String completedWord = autoCompletedWords.getFirst();
+	        	    String completedWord = autoCompletedWords.get(0);
 	        	    System.out.println(completedWord.substring(0, 1).toUpperCase() + completedWord.substring(1));
 	        	} else {
 	        		// to print words separated by a comma if multiple suggestions are present
