@@ -15,7 +15,7 @@ public class PageRanking {
         System.out.print("Enter the city to search for properties: ");
         String city = scanner.nextLine();
 
-        String jsonFilePath = "src/main/resources/ZoloProperties.json"; // Path to your JSON file
+        String jsonFilePath = "src/main/resources/CombinedProperties.json"; // Path to your JSON file
 
         try {
             // Parse JSON file

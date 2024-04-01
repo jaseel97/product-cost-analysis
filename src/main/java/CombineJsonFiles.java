@@ -38,7 +38,7 @@ public class CombineJsonFiles {
         }
 
         // Write combinedArray to a single JSON file
-        writeJsonArrayToFile(combinedArray, "combined.json");
+        writeJsonArrayToFile(combinedArray, "src/main/resources/CombinedProperties.json");
     }
 
     private static JSONArray readJsonArrayFromFile(String filePath) throws IOException, JSONException {

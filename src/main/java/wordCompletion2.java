@@ -98,7 +98,7 @@ public class wordCompletion2 {
 
         try {
             // Parse JSON array of objects
-            JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/RealtorProperties.json"), JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/CombinedProperties.json"), JsonArray.class);
             // Iterate over JSON objects
             for (JsonElement element : jsonArray) {
                 JsonObject jsonObject = element.getAsJsonObject();
