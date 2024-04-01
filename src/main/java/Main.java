@@ -37,6 +37,8 @@ public class Main {
 		SpellChecker spellChecker = new SpellChecker();
 		spellChecker.buildSpellCheckerSplayTree();
 
+		PriceAnalyzer.analyzeAllListings();
+
 		Scanner inputReader = new Scanner(System.in);
 		String searchOption;
 		do {
@@ -179,9 +181,13 @@ public class Main {
 			Map<String, Integer> cityAndProvinceFrequencyCount = FrequencyCount.frequencyOfCityAndProvince(propertyList);
 	        for (Map.Entry<String, Integer> entry : cityAndProvinceFrequencyCount.entrySet()) {
 	            if (entry.getKey().equalsIgnoreCase(searchedInput)) {
-	                System.out.println("There are " + entry.getValue() + " listings in " + searchedInput);
+	                System.out.println("\nThere are " + entry.getValue() + " listings in " + searchedInput);
 	            }
 	        }
+			Double[] metrics = PriceAnalyzer.priceMetrics.get(searchFactor).get(searchedInput);
+			System.out.printf("Average Price of properties in %s : %.2f\n",searchedInput,metrics[1]);
+			System.out.printf("Least expensive property in %s costs: %.2f\n",searchedInput,metrics[0]);
+			System.out.printf("Most expensive property in %s costs: %.2f\n",searchedInput,metrics[2]);
 			JsonArray rankedList = PageRanking.rankProperties(propertyList);
 			displayInBatches(rankedList);
 			return true;
@@ -239,7 +245,6 @@ public class Main {
 			}
 		}
 	}
-
 	public static void searchByCityPriceBedroomsAndBathrooms(JsonArray propertyList, String cityInput, String lowerPriceString2, String higherPriceString, String noOfBedrooms, String noOfBathrooms) {
 		int propertyCount = 0;
 		BigDecimal lowerPriceRangeValue = new BigDecimal(lowerPriceString2);
