@@ -55,7 +55,7 @@ public class Main {
 					boolean isValidCityEntered = false;
 					do {
 						System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
-						String searchedCity = inputReader.nextLine();
+						String searchedCity = inputReader.nextLine().trim();
 						if(searchedCity.equals(BACK))
 							break;
 						boolean isValidInput = validateStringInput(searchedCity);
@@ -70,7 +70,7 @@ public class Main {
 					boolean isValidProvinceEntered = false;
 					do {
 						System.out.println("\nEnter province:  (Type "+BACK+" to go back to main menu)");
-						String searchedProvince = inputReader.nextLine();
+						String searchedProvince = inputReader.nextLine().trim();
 						if(searchedProvince.equals(BACK))
 							break;
 						boolean isValidInput2 = validateStringInput(searchedProvince);
@@ -83,8 +83,10 @@ public class Main {
 				case "3":
 					boolean isValidPincodeEntered = false;
 					do {
-						System.out.println("\nEnter pincode: (Type "+BACK+" to go back to main menu)");
-						String searchedPincode = inputReader.nextLine();
+						System.out.println("\nExpected: Canadian Pincode Format");
+						System.out.println("Example: R2M3Z4 / R2M 3Z4");
+						System.out.println("\nEnter ZIP Code: (Type "+BACK+" to go back to main menu)");
+						String searchedPincode = inputReader.nextLine().trim();;
 						if(searchedPincode.equals(BACK))
 							break;
 						boolean isValidInput3 = validatePincodeInput(searchedPincode);
@@ -97,55 +99,58 @@ public class Main {
 					} while(!isValidPincodeEntered);
 					break;
 				case "4":
-					boolean isValidLowerPriceEntered = false;
-					do{
-						System.out.println("\nEnter the lower price range: (Type "+BACK+" to go back to main menu)");
-						String lowerPriceString = inputReader.nextLine();
-						if(lowerPriceString.equals(BACK))
-							break;
-						boolean isValidInput4 = validatePriceInput(lowerPriceString);
-						if(isValidInput4) {
-							isValidLowerPriceEntered = true;
-							boolean isValidHigherPriceEntered = false;
-							do {
-								System.out.println("\nEnter the higher price range:");
-								String higherPriceString = inputReader.nextLine();
-								isValidInput4 = validatePriceInput(higherPriceString);
-								if(isValidInput4) {
-									isValidHigherPriceEntered = true;
-									BigDecimal lowerPropertyPrice = new BigDecimal(lowerPriceString);
-									BigDecimal higherPropertyPrice = new BigDecimal(higherPriceString);
-									searchByPriceRange(propertyList, lowerPropertyPrice, higherPropertyPrice);
-								} else
-									System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-							}while(!isValidHigherPriceEntered);
-						}
-						else
-							System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-					}while(!isValidLowerPriceEntered);
-					break;
+				    boolean isValidLowerPriceEntered = false;
+				    do {
+				        System.out.println("\nEnter the lower price range: (Type " + BACK + " to go back to the main menu)");
+				        String lowerPriceString = inputReader.nextLine().trim();;
+				        if (lowerPriceString.equals(BACK))
+				            break;
+				        boolean isValidInput4 = validatePriceInput(lowerPriceString);
+				        if (isValidInput4) {
+				            isValidLowerPriceEntered = true;
+				            boolean isValidHigherPriceEntered = false;
+				            do {
+				                System.out.println("\nEnter the higher price range:");
+				                String higherPriceString = inputReader.nextLine().trim();;
+				                isValidInput4 = validatePriceInput(higherPriceString);
+				                if (isValidInput4) {
+				                    BigDecimal lowerPropertyPrice = new BigDecimal(lowerPriceString);
+				                    BigDecimal higherPropertyPrice = new BigDecimal(higherPriceString);
+				                    if (higherPropertyPrice.compareTo(lowerPropertyPrice) > 0) {
+				                        isValidHigherPriceEntered = true;
+				                        searchByPriceRange(propertyList, lowerPropertyPrice, higherPropertyPrice);
+				                    } else {
+				                        System.out.println("Higher price must be greater than the lower price entered. Please enter a higher price.");
+				                    }
+				                } else
+				                    System.out.println("Invalid price format. Please enter a valid price using positive numbers only! (Decimal points can be used)");
+				            } while (!isValidHigherPriceEntered);
+				        } else
+				            System.out.println("Invalid price format. Please enter a valid price using positive numbers only! (Decimal points can be used)");
+				    } while (!isValidLowerPriceEntered);
+				    break;
 				case "5":
 					extractUniqueValues(propertyList, "city");
 					System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
-					String searchedCity2 = inputReader.nextLine();
+					String searchedCity2 = inputReader.nextLine().trim();
 					if(searchedCity2.equals(BACK))
 						break;
 					boolean isCityValidInput = validateStringInput(searchedCity2);
 					if(isCityValidInput) {
 						System.out.println("\nEnter the lower price range:");
-						String lowerPriceString2 = inputReader.nextLine();
+						String lowerPriceString2 = inputReader.nextLine().trim();
 						boolean isLowerPriceInputValid = validatePriceInput(lowerPriceString2);
 						if(isLowerPriceInputValid) {
 							System.out.println("\nEnter the higher price range:");
-							String higherPriceString = inputReader.nextLine();
+							String higherPriceString = inputReader.nextLine().trim();
 							boolean isHigherPriceInputValid = validatePriceInput(higherPriceString);
 							if(isHigherPriceInputValid) {
 								System.out.println("\nEnter number of bedrooms:");
-								String noOfBedrooms = inputReader.nextLine();
+								String noOfBedrooms = inputReader.nextLine().trim();
 								boolean validBedrooms = isValidInteger(noOfBedrooms);
 								if(validBedrooms) {
 									System.out.println("\nEnter number of bathrooms:");
-									String noOfBathrooms = inputReader.nextLine();
+									String noOfBathrooms = inputReader.nextLine().trim();
 									boolean validBathrooms = isValidInteger(noOfBathrooms);
 									if(validBathrooms) {
 										searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString2, higherPriceString, noOfBedrooms, noOfBathrooms);
