@@ -171,11 +171,13 @@ public class Main {
 						}
 						validPrice = validatePriceInput(higherPriceString);
 						if(!validPrice) System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-						BigDecimal lowerPriceRangeValue = new BigDecimal(lowerPriceString);
-						BigDecimal higherPriceRangeValue = new BigDecimal(higherPriceString);
-						if(higherPriceRangeValue.compareTo(lowerPriceRangeValue) <= 0){
-							validPrice = false;
-							System.out.println("The max price should be greater than the min price (Min : "+lowerPriceString+")!");
+						else{
+							BigDecimal lowerPriceRangeValue = new BigDecimal(lowerPriceString);
+							BigDecimal higherPriceRangeValue = new BigDecimal(higherPriceString);
+							if(higherPriceRangeValue.compareTo(lowerPriceRangeValue) <= 0){
+								validPrice = false;
+								System.out.println("The max price should be greater than the min price (Min : "+lowerPriceString+")!");
+							}
 						}
 					}while(!validPrice);
 					if(goBack) break;
