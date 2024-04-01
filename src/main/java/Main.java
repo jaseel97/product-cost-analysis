@@ -1,5 +1,6 @@
 import java.io.FileReader;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -186,13 +187,14 @@ public class Main {
 			Map<String, Integer> cityAndProvinceFrequencyCount = FrequencyCount.frequencyOfCityAndProvince(propertyList);
 	        for (Map.Entry<String, Integer> entry : cityAndProvinceFrequencyCount.entrySet()) {
 	            if (entry.getKey().equalsIgnoreCase(searchedInput)) {
-	                System.out.println("\nThere are " + entry.getValue() + " listings in " + searchedInput);
+	                System.out.println("\nThere are " + entry.getValue() + " listings in " + searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1));
 	            }
 	        }
 			Double[] metrics = PriceAnalyzer.priceMetrics.get(searchFactor).get(searchedInput);
-			System.out.printf("Average Price of properties in %s : %.2f\n",searchedInput,metrics[1]);
-			System.out.printf("Least expensive property in %s costs: %.2f\n",searchedInput,metrics[0]);
-			System.out.printf("Most expensive property in %s costs: %.2f\n",searchedInput,metrics[2]);
+			NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.CANADA);
+			System.out.println("\nAverage Price of properties in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+": "+currencyFormatter.format(metrics[1]));
+			System.out.println("Least expensive property in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+" costs: "+currencyFormatter.format(metrics[0]));
+			System.out.println("Most expensive property in "+searchedInput.substring(0, 1).toUpperCase() + searchedInput.substring(1)+" costs: "+currencyFormatter.format(metrics[2]));
 			JsonArray rankedList = PageRanking.rankProperties(propertyList);
 			displayInBatches(rankedList);
 			return true;
