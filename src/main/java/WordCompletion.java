@@ -1,63 +1,63 @@
+import java.util.*;
 import com.google.gson.*;
 import java.io.*;
-import java.util.*;
 
-class TrieNode {
-    Map<Character, TrieNode> children;
-    boolean isEndOfWord;
+class TriNodeClass {
+    Map<Character, TriNodeClass> childrenOfTri;
+    boolean isWordEnd;
 
-    public TrieNode() {
-        this.children = new HashMap<>();
-        this.isEndOfWord = false;
+    public TriNodeClass() {
+        this.childrenOfTri = new HashMap<>();
+        this.isWordEnd = false;
     }
 }
 
 class Trie {
-    final TrieNode root;
+    final TriNodeClass rootTri;
 
     public Trie() {
-        root = new TrieNode();
+    	rootTri = new TriNodeClass();
     }
 
-    public void insert(String word) {
-        TrieNode current = root;
-        word = word.toLowerCase(); // Convert word to lowercase
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            TrieNode node = current.children.get(ch);
+    public void insertIntoTrie(String inputWord) {
+    	TriNodeClass current = rootTri;
+    	inputWord = inputWord.toLowerCase(); // Convert word to lowercase
+        for (int it1 = 0; it1 < inputWord.length(); it1++) {
+            char charinp = inputWord.charAt(it1);
+            TriNodeClass node = current.childrenOfTri.get(charinp);
             if (node == null) {
-                node = new TrieNode();
-                current.children.put(ch, node);
+                node = new TriNodeClass();
+                current.childrenOfTri.put(charinp, node);
             }
             current = node;
         }
-        current.isEndOfWord = true;
+        current.isWordEnd = true;
     }
 
     public boolean search(String word) {
-        TrieNode current = root;
+    	TriNodeClass current = rootTri;
         word = word.toLowerCase(); // Convert word to lowercase
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            TrieNode node = current.children.get(ch);
-            if (node == null) {
+        for (int it2 = 0; it2 < word.length(); it2++) {
+            char charInp = word.charAt(it2);
+            TriNodeClass triNode = current.childrenOfTri.get(charInp);
+            if (triNode == null) {
                 return false;
             }
-            current = node;
+            current = triNode;
         }
-        return current.isEndOfWord;
+        return current.isWordEnd;
     }
 
     public boolean startsWith(String prefix) {
-        TrieNode current = root;
+    	TriNodeClass current = rootTri;
         prefix = prefix.toLowerCase(); // Convert prefix to lowercase
-        for (int i = 0; i < prefix.length(); i++) {
-            char ch = prefix.charAt(i);
-            TrieNode node = current.children.get(ch);
-            if (node == null) {
+        for (int it3 = 0; it3 < prefix.length(); it3++) {
+            char charInp = prefix.charAt(it3);
+            TriNodeClass triNode = current.childrenOfTri.get(charInp);
+            if (triNode == null) {
                 return false;
             }
-            current = node;
+            current = triNode;
         }
         return true;
     }
@@ -76,26 +76,26 @@ public class WordCompletion {
     }
 
     public List<String> autoCompletion(String prefix) {
-        TrieNode current = this.trie.root;
+    	TriNodeClass currentTri = this.trie.rootTri;
         for (int i = 0; i < prefix.length(); i++) {
             char ch = prefix.charAt(i);
-            TrieNode node = current.children.get(ch);
+            TriNodeClass node = currentTri.childrenOfTri.get(ch);
             if (node == null) {
                 return Collections.emptyList();
             }
-            current = node;
+            currentTri = node;
         }
         List<String> autoCompletedWords = new ArrayList<>();
-        findWordsWithPrefix(current, prefix, autoCompletedWords);
+        findWordsWithPrefix(currentTri, prefix, autoCompletedWords);
         return autoCompletedWords;
     }
 
-    private void findWordsWithPrefix(TrieNode node, String prefix, List<String> result) {
-        if (node.isEndOfWord) {
+    private void findWordsWithPrefix(TriNodeClass node, String prefix, List<String> result) {
+        if (node.isWordEnd) {
             result.add(prefix);
         }
-        for (char ch : node.children.keySet()) {
-            findWordsWithPrefix(node.children.get(ch), prefix + ch, result);
+        for (char chars : node.childrenOfTri.keySet()) {
+            findWordsWithPrefix(node.childrenOfTri.get(chars), prefix + chars, result);
         }
     }
 
@@ -109,15 +109,15 @@ public class WordCompletion {
                 JsonObject jsonObject = element.getAsJsonObject();
                 JsonElement city = jsonObject.get("city");
                 if (city != null) {
-                    this.trie.insert(city.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(city.getAsString().toLowerCase());
                 }
                 JsonElement province = jsonObject.get("province");
                 if(province != null) {
-                    this.trie.insert(province.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(province.getAsString().toLowerCase());
                 }
                 JsonElement pincode = jsonObject.get("pincode");
                 if(pincode != null) {
-                    this.trie.insert(pincode.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(pincode.getAsString().toLowerCase());
                 }
             }
         } catch (IOException e) {
