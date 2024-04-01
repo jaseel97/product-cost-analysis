@@ -48,114 +48,131 @@ public class Main {
 			searchOption = inputReader.nextLine();
 
 			switch (searchOption) {
-			case "1":
-				extractUniqueCities(propertyList, "city");
-				System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
-				String searchedCity = inputReader.nextLine();
-				if(searchedCity.equals(BACK))
+				case "1":
+					extractUniqueValues(propertyList, "city");
+					boolean isValidCityEntered = false;
+					do {
+						System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
+						String searchedCity = inputReader.nextLine();
+						if(searchedCity.equals(BACK))
+							break;
+						boolean isValidInput = validateStringInput(searchedCity);
+						if(isValidInput) {
+							isValidCityEntered = searchByProperty(index.get(searchedCity), searchedCity, "city", wcTrie, spellChecker);
+						}
+						else System.out.println("Invalid city name. Please enter a valid city with letters only.");
+					}while(!isValidCityEntered);
 					break;
-				boolean isValidInput = validateStringInput(searchedCity);
-				if(isValidInput)
-					searchByProperty(index.get(searchedCity), searchedCity, "city", wcTrie, spellChecker);
-				else
-					System.out.println("Invalid city name. Please enter a valid city with letters only.");
-				break;
-			case "2":
-				extractUniqueCities(propertyList, "province");
-				System.out.println("\nEnter province:  (Type "+BACK+" to go back to main menu)");
-				String searchedProvince = inputReader.nextLine();
-				if(searchedProvince.equals(BACK))
+				case "2":
+					extractUniqueValues(propertyList, "province");
+					boolean isValidProvinceEntered = false;
+					do {
+						System.out.println("\nEnter province:  (Type "+BACK+" to go back to main menu)");
+						String searchedProvince = inputReader.nextLine();
+						if(searchedProvince.equals(BACK))
+							break;
+						boolean isValidInput2 = validateStringInput(searchedProvince);
+						if(isValidInput2) {
+							isValidProvinceEntered = searchByProperty(index.get(searchedProvince), searchedProvince, "province", wcTrie, spellChecker);
+						}
+						else System.out.println("Invalid province name. Please enter a valid province with letters only.");
+					}while(!isValidProvinceEntered);
 					break;
-				boolean isValidInput2 = validateStringInput(searchedProvince);
-				if(isValidInput2)
-					searchByProperty(index.get(searchedProvince), searchedProvince, "province", wcTrie, spellChecker);
-				else
-					System.out.println("Invalid province name. Please enter a valid province with letters only.");
-				break;
-			case "3":
-				System.out.println("\nEnter ZIP Code: (Type "+BACK+" to go back to main menu)");
-				String searchedPincode = inputReader.nextLine();
-				if(searchedPincode.equals(BACK))
+				case "3":
+					boolean isValidPincodeEntered = false;
+					do {
+						System.out.println("\nEnter pincode: (Type "+BACK+" to go back to main menu)");
+						String searchedPincode = inputReader.nextLine();
+						if(searchedPincode.equals(BACK))
+							break;
+						boolean isValidInput3 = validatePincodeInput(searchedPincode);
+						if(isValidInput3) {
+//							isValidPincodeEntered = true;
+							searchedPincode = searchedPincode.replace(" ", "");
+							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode, "pincode", wcTrie, spellChecker);
+						}
+						else System.out.println("Invalid Pincode. Please enter a valid Canadian postal code!");
+					} while(!isValidPincodeEntered);
 					break;
-				boolean isValidInput3 = validatePincodeInput(searchedPincode);
-				if(isValidInput3) {
-					searchedPincode = searchedPincode.replace(" ", "");
-					searchByProperty(index.get(searchedPincode), searchedPincode, "pincode", wcTrie, spellChecker);
-				}
-				else
-					System.out.println("Invalid ZIP Code. Please enter a valid Canadian postal code!");
-				break;
-			case "4":
-				System.out.println("\nEnter the lower price range: (Type "+BACK+" to go back to main menu)");
-				String lowerPriceString = inputReader.nextLine();
-				if(lowerPriceString.equals(BACK))
+				case "4":
+					boolean isValidLowerPriceEntered = false;
+					do{
+						System.out.println("\nEnter the lower price range: (Type "+BACK+" to go back to main menu)");
+						String lowerPriceString = inputReader.nextLine();
+						if(lowerPriceString.equals(BACK))
+							break;
+						boolean isValidInput4 = validatePriceInput(lowerPriceString);
+						if(isValidInput4) {
+							isValidLowerPriceEntered = true;
+							boolean isValidHigherPriceEntered = false;
+							do {
+								System.out.println("\nEnter the higher price range:");
+								String higherPriceString = inputReader.nextLine();
+								isValidInput4 = validatePriceInput(higherPriceString);
+								if(isValidInput4) {
+									isValidHigherPriceEntered = true;
+									BigDecimal lowerPropertyPrice = new BigDecimal(lowerPriceString);
+									BigDecimal higherPropertyPrice = new BigDecimal(higherPriceString);
+									searchByPriceRange(propertyList, lowerPropertyPrice, higherPropertyPrice);
+								} else
+									System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+							}while(!isValidHigherPriceEntered);
+						}
+						else
+							System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+					}while(!isValidLowerPriceEntered);
 					break;
-				boolean isValidInput4 = validatePriceInput(lowerPriceString);
-				if(isValidInput4) {
-					System.out.println("\nEnter the higher price range:");
-					String higherPriceString = inputReader.nextLine();
-					isValidInput4 = validatePriceInput(higherPriceString);
-					if(isValidInput4) {
-						BigDecimal lowerPropertyPrice = new BigDecimal(lowerPriceString);
-						BigDecimal higherPropertyPrice = new BigDecimal(higherPriceString);
-						searchByPriceRange(propertyList, lowerPropertyPrice, higherPropertyPrice);
-					} else
-						System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-				}
-				else
-					System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-				break;
-			case "5":
-				extractUniqueCities(propertyList, "city");
-				System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
-				String searchedCity2 = inputReader.nextLine();
-				if(searchedCity2.equals(BACK))
-					break;
-				boolean isCityValidInput = validateStringInput(searchedCity2);
-				if(isCityValidInput) {
-					System.out.println("\nEnter the lower price range:");
-					String lowerPriceString2 = inputReader.nextLine();
-					boolean isLowerPriceInputValid = validatePriceInput(lowerPriceString2);
-					if(isLowerPriceInputValid) {
-						System.out.println("\nEnter the higher price range:");
-						String higherPriceString = inputReader.nextLine();
-						boolean isHigherPriceInputValid = validatePriceInput(higherPriceString);
-						if(isHigherPriceInputValid) {
-							System.out.println("\nEnter number of bedrooms:");
-							String noOfBedrooms = inputReader.nextLine();
-							boolean validBedrooms = isValidInteger(noOfBedrooms);
-							if(validBedrooms) {
-								System.out.println("\nEnter number of bathrooms:");
-								String noOfBathrooms = inputReader.nextLine();
-								boolean validBathrooms = isValidInteger(noOfBathrooms);
-								if(validBathrooms) {
-									searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString2, higherPriceString, noOfBedrooms, noOfBathrooms);
+				case "5":
+					extractUniqueValues(propertyList, "city");
+					System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
+					String searchedCity2 = inputReader.nextLine();
+					if(searchedCity2.equals(BACK))
+						break;
+					boolean isCityValidInput = validateStringInput(searchedCity2);
+					if(isCityValidInput) {
+						System.out.println("\nEnter the lower price range:");
+						String lowerPriceString2 = inputReader.nextLine();
+						boolean isLowerPriceInputValid = validatePriceInput(lowerPriceString2);
+						if(isLowerPriceInputValid) {
+							System.out.println("\nEnter the higher price range:");
+							String higherPriceString = inputReader.nextLine();
+							boolean isHigherPriceInputValid = validatePriceInput(higherPriceString);
+							if(isHigherPriceInputValid) {
+								System.out.println("\nEnter number of bedrooms:");
+								String noOfBedrooms = inputReader.nextLine();
+								boolean validBedrooms = isValidInteger(noOfBedrooms);
+								if(validBedrooms) {
+									System.out.println("\nEnter number of bathrooms:");
+									String noOfBathrooms = inputReader.nextLine();
+									boolean validBathrooms = isValidInteger(noOfBathrooms);
+									if(validBathrooms) {
+										searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString2, higherPriceString, noOfBedrooms, noOfBathrooms);
+									}
+									else
+										System.out.println("Invalid input. Please enter a valid positive number!");
 								}
 								else
 									System.out.println("Invalid input. Please enter a valid positive number!");
-							}
-							else
-								System.out.println("Invalid input. Please enter a valid positive number!");
-						} else
+							} else
+								System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+						}
+						else
 							System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
 					}
 					else
-						System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+						System.out.println("Invalid city name. Please enter a valid city with letters only.");
+					break;
+				case "6":
+					System.out.println("Exiting...");
+					break;
+				default:
+					System.out.println("Invalid option. Please enter a valid option!");
 				}
-				else
-					System.out.println("Invalid city name. Please enter a valid city with letters only.");
-				break;
-			case "6":
-				System.out.println("Exiting...");
-				break;
-			default:
-				System.out.println("Invalid option. Please enter a valid option!");
-			}
 		} while (!searchOption.equals("6"));
 		inputReader.close();
 	}
 
-	public static void searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor, WordCompletion wcTrie, SpellChecker spellChecker) {
+	public static boolean searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor, WordCompletion wcTrie, SpellChecker spellChecker) {
 		if (propertyList != null) {
 			System.out.println("Properties in index with pin : "+propertyList.size());
 			for (JsonElement element : propertyList) {
@@ -163,6 +180,7 @@ public class Main {
 				SearchFrequency.call(property);
 				DisplayFormatter.printPropertyDetails(property);
 			}
+			return true;
 		} else {
 			System.out.println("Could not find : "+searchedInput);
 			List<String> autoCompletedWords = wcTrie.autoCompletion(searchedInput);
@@ -193,6 +211,7 @@ public class Main {
 				}
 			}
 		}
+		return false;
 	}
 
 	public static void searchByCityPriceBedroomsAndBathrooms(JsonArray propertyList, String cityInput, String lowerPriceString2, String higherPriceString, String noOfBedrooms, String noOfBathrooms) {
@@ -280,18 +299,21 @@ public class Main {
 		return matcher.matches();
 	}
 
-	public static void extractUniqueCities( JsonArray propertyList, String searchFactor) {
-		Set<String> uniqueCities = new HashSet<>();
-        for (JsonElement element : propertyList) {
-            JsonObject jsonObject = element.getAsJsonObject();
-            String city = jsonObject.get(searchFactor).getAsString();
-            uniqueCities.add(city);
-        }
+	public static void extractUniqueValues( JsonArray propertyList, String searchFactor) {
+		Set<String> uniqueFactorValues = new HashSet<>();
+		for (JsonElement element : propertyList) {
+			JsonObject inpJsonObj = element.getAsJsonObject();
+			String searchFactorValue = inpJsonObj.get(searchFactor).getAsString();
+			uniqueFactorValues.add(searchFactorValue);
+		}
 
-        // Print unique cities
-        System.out.println("\nChoose from the provided list of cities:\n");
-        for (String city : uniqueCities) {
-            System.out.println("- "+city);
-        }
+		// Print unique cities
+		if(searchFactor == "city")
+			System.out.println("\nChoose from the provided list of cities:\n");
+		else if(searchFactor == "province")
+			System.out.println("\nChoose from the provided list of provinces:\n");
+		for (String val : uniqueFactorValues) {
+			System.out.println("- "+val);
+		}
 	}
 }
