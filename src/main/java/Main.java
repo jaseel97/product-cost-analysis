@@ -17,7 +17,7 @@ public class Main {
 	static final int DISPLAY_BATCH_SIZE = 4;
 
 	public static void main(String[] args) {
-		System.out.println("\n\n------------------------------------- Property Lens -----------------------------------------------------");
+		System.out.println("\n\n------------------------------------- Welcome to Property Lens -----------------------------------------------------");
 		Gson gson = new Gson();
 
 		// Read JSON data into a JsonArray
@@ -173,7 +173,7 @@ public class Main {
 						System.out.println("Invalid city name. Please enter a valid city with letters only.");
 					break;
 				case "6":
-					System.out.println("Exiting...");
+					System.out.println("Thank You for using Property Lens!");
 					break;
 				default:
 					System.out.println("Invalid option. Please enter a valid option!");
