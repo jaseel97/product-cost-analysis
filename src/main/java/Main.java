@@ -94,7 +94,7 @@ public class Main {
 							break;
 						boolean isValidInput3 = validatePincodeInput(searchedPincode);
 						if(isValidInput3) {
-//							isValidPincodeEntered = true;
+							isValidPincodeEntered = true;
 							searchedPincode = searchedPincode.replace(" ", "");
 							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode.toLowerCase(), "pincode", wcTrie, spellChecker);
 						}
