@@ -235,7 +235,7 @@ public class Main {
 		for (JsonElement element : properties) {
 			if(batch_ctr < DISPLAY_BATCH_SIZE) {
 				JsonObject property = element.getAsJsonObject();
-				SearchFrequency.call(property);
+				SearchFrequency.updateSearchFrequency(property);
 				DisplayFormatter.printPropertyDetails(property);
 				batch_ctr++;
 				shown_so_far++;
@@ -272,7 +272,7 @@ public class Main {
 				if (price.compareTo(lowerPriceRangeValue) >= 0 && price.compareTo(higherPriceRangeValue) <= 0) {
 					// Check if the number of bedrooms and bathrooms match the specified criteria
 					if (bedrooms == bedroomsInputValue && bathrooms == bathroomsInputValue) {
-						SearchFrequency.call(property);
+						SearchFrequency.updateSearchFrequency(property);
 						DisplayFormatter.printPropertyDetails(property);
 						propertyCount++;
 					}
@@ -291,7 +291,7 @@ public class Main {
 			if (priceElement != null && priceElement.isJsonPrimitive()) {
 				BigDecimal propertyPrice = priceElement.getAsBigDecimal();
 				if (propertyPrice.compareTo(lowerPriceInput) >= 0 && propertyPrice.compareTo(higherPriceInput) <= 0) {
-					SearchFrequency.call(property);
+					SearchFrequency.updateSearchFrequency(property);
 					DisplayFormatter.printPropertyDetails(property);
 					propertyCount++;
 				}

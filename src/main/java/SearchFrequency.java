@@ -29,7 +29,7 @@ public class SearchFrequency {
         }
     }
 
-    private static void updateSearchFrequency(JsonObject propertyDetails) {
+    public static void updateSearchFrequency(JsonObject propertyDetails) {
         int frequency = propertyDetails.get("search_frequency").getAsInt();
         propertyDetails.addProperty("search_frequency", frequency + 1);
 
@@ -47,9 +47,5 @@ public class SearchFrequency {
         } catch (IOException e) {
             System.out.println("Error writing search frequency to JSON file");
         }
-    }
-
-    public static void call(JsonObject propertyDetail) {
-        updateSearchFrequency(propertyDetail);
     }
 }
