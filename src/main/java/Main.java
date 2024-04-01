@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 public class Main {
 
 	static final String BACK="!b";
+	static final int DISPLAY_BATCH_SIZE = 4;
 
 	public static void main(String[] args) {
 		System.out.println("\n\n------------------------------------- Property Lens -----------------------------------------------------");
@@ -182,11 +183,7 @@ public class Main {
 	            }
 	        }
 			JsonArray rankedList = PageRanking.rankProperties(propertyList);
-			for (JsonElement element : rankedList) {
-				JsonObject property = element.getAsJsonObject();
-				SearchFrequency.call(property);
-				DisplayFormatter.printPropertyDetails(property);
-			}
+			displayInBatches(rankedList);
 			return true;
 		} else {
 			System.out.println("Could not find : "+searchedInput);
@@ -219,6 +216,28 @@ public class Main {
 			}
 		}
 		return false;
+	}
+
+	public static void displayInBatches(JsonArray properties){
+		Scanner sc = new Scanner(System.in);
+		int batch_ctr = 0, shown_so_far = 0;
+		for (JsonElement element : properties) {
+			if(batch_ctr < DISPLAY_BATCH_SIZE) {
+				JsonObject property = element.getAsJsonObject();
+				SearchFrequency.call(property);
+				DisplayFormatter.printPropertyDetails(property);
+				batch_ctr++;
+				shown_so_far++;
+			}else {
+				System.out.println((properties.size() - shown_so_far) + " properties left");
+				System.out.print("Press enter to list more entries, !b to go back to menu : ");
+				String userInput = sc.nextLine();
+				if(userInput.contains("!b")){
+					return;
+				}
+				batch_ctr = 0;
+			}
+		}
 	}
 
 	public static void searchByCityPriceBedroomsAndBathrooms(JsonArray propertyList, String cityInput, String lowerPriceString2, String higherPriceString, String noOfBedrooms, String noOfBathrooms) {
