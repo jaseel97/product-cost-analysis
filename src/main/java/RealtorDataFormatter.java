@@ -15,14 +15,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class DataFormatter {
+public class RealtorDataFormatter {
 	public static void main(String[] args) {
 		Gson gson = new Gson();
 
 		try {
 			//parse JSON array of objects
-			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/realtor (3).json"), JsonArray.class);
-			
+			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/realtor.json"), JsonArray.class);
 			//create a list to hold PropertyDetails objects
 			List<PropertyDetails> propertyList = new ArrayList<>();
 			//iterate over JSON objects
@@ -40,8 +39,8 @@ public class DataFormatter {
 					int bathrooms = getBedroomsAndBathrooms(propertyValue.toString(), "Bathrooms");
 					String description = getPropertyDescription(propertyValue.toString());
 					String buildingType = getPropertyBuildingType(propertyValue.toString());
-					float numberOfStoreys = getNumberOfStoreys(propertyValue.toString());
-					double propertyArea = getSqftAreaOfProperty(propertyValue.toString());
+//					float numberOfStoreys = getNumberOfStoreys(propertyValue.toString());
+//					double propertyArea = getSqftAreaOfProperty(propertyValue.toString());
 					String city = getPropertyCity(jsonKeyValue.toString());
 					String province = getPropertyProvince(propertyValue.toString());
 
@@ -53,9 +52,9 @@ public class DataFormatter {
 
 			// Write propertyList to JSON file
 			Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
-			try (FileWriter writer = new FileWriter("src/main/resources/RealtorProperties2.json")) {
+			try (FileWriter writer = new FileWriter("src/main/resources/RealtorProperties.json")) {
 				gsonBuilder.toJson(propertyList, writer);
-				System.out.println("Property details written to RealtorProperties2.json successfully.");
+				System.out.println("Property details written to RealtorProperties.json successfully.");
 			} catch (IOException e) {
 				System.out.println("Error writing data to json!");
 			}

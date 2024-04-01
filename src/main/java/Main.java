@@ -15,13 +15,12 @@ import com.google.gson.JsonObject;
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("\nProperty Cost Analysis");
-		System.out.println("------------------------------------------------------------------------------------------------");
+		System.out.println("\n\n------------------------------------- Property Lens -----------------------------------------------------");
 		Gson gson = new Gson();
 
 		// Read JSON data into a JsonArray
 		JsonArray propertyList = null;
-		try (FileReader reader = new FileReader("src/main/resources/RealtorProperties2.json")) {
+		try (FileReader reader = new FileReader("src/main/resources/CombinedProperties.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
 		} catch (Exception e) {
 			System.out.println("error : could not find json with scraped property data!");

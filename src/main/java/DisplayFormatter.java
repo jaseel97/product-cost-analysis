@@ -27,18 +27,6 @@ public class DisplayFormatter {
         System.out.println("Bedrooms: " + bedrooms);
         int bathrooms = propertyDetails.get("bathrooms") != null ? propertyDetails.get("bathrooms").getAsInt() : null;
         System.out.println("Bathrooms: " + bathrooms);
-        System.out.print("Number of Storeys: ");
-        double numberOfStoreys = propertyDetails.get("numberOfStoreys").getAsDouble();
-
-        if (numberOfStoreys % 1 == 0) {
-            // Whole number
-            System.out.println((int) numberOfStoreys);
-        } else {
-            // Decimal with value
-            System.out.println(decimalFormatter.format(numberOfStoreys));
-        }
-        System.out.println("Square Footage: " + propertyDetails.get("sqft").getAsDouble() + " sqft");
-
         String description = propertyDetails.get("description") != null ? propertyDetails.get("description").getAsString(): null;
         System.out.println("Description: " + description);
         System.out.println();

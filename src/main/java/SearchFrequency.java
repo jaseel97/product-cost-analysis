@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class SearchFrequency {
 
-    private static final String JSON_FILE_PATH = "src/main/resources/ZoloProperties.json";
+    private static final String JSON_FILE_PATH = "src/main/resources/CombinedProperties.json";
 
     private static void updateSearchFrequency(JsonObject propertyDetails) {
     	int frequency = propertyDetails.get("search_frequency").getAsInt();
