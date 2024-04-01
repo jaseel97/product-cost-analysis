@@ -176,7 +176,7 @@ public class SpellChecker {
    
     public static String call(String searchFactor, String inputtedString) {
     	SplayTree dicti = new SplayTree();
-    	String fileName = "src/main/resources/RealtorProperties2.json";
+    	String fileName = "src/main/resources/RealtorProperties.json";
 
         // Load data from JSON file
         try {
