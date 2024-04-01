@@ -38,7 +38,7 @@ public class CombineJsonFiles {
         }
 
         // Write combinedArray to a single JSON file
-        writeJsonArrayToFile(combinedArray, "src/main/resources/CombinedProperties.json");
+        writeJsonArrayToFile(combinedArray);
     }
 
     private static JSONArray readJsonArrayFromFile(String filePath) throws IOException, JSONException {
@@ -54,12 +54,12 @@ public class CombineJsonFiles {
         return new JSONArray(content.toString());
     }
 
-    private static void writeJsonArrayToFile(JSONArray jsonArray, String filePath) {
-        try (FileWriter fileWriter = new FileWriter(filePath)) {
+    private static void writeJsonArrayToFile(JSONArray jsonArray) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/CombinedProperties.json")) {
             fileWriter.write(jsonArray.toString(4)); // Indent with 4 spaces for better readability
             fileWriter.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error writing formatted data to JSON!");
         }
     }
 }

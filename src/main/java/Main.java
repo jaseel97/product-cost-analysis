@@ -379,9 +379,9 @@ public class Main {
 		}
 
 		// Print unique cities
-		if(searchFactor == "city")
+		if(Objects.equals(searchFactor, "city"))
 			System.out.println("\nChoose from the provided list of cities:\n");
-		else if(searchFactor == "province")
+		else if(Objects.equals(searchFactor, "province"))
 			System.out.println("\nChoose from the provided list of provinces:\n");
 		for (String val : uniqueFactorValues) {
 			System.out.println("- "+val);

@@ -40,7 +40,7 @@ public class RealtorDataFormatter {
 					String buildingType = getPropertyBuildingType(propertyValue.toString());
 //					float numberOfStoreys = getNumberOfStoreys(propertyValue.toString());
 //					double propertyArea = getSqftAreaOfProperty(propertyValue.toString());
-					String city = getPropertyCity(jsonKeyValue.toString());
+					String city = getPropertyCity(jsonKeyValue);
 					String province = getPropertyProvince(propertyValue.toString());
 
 					// Create PropertyDetails object and add it to the list

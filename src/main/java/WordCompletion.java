@@ -29,12 +29,12 @@ class Trie {
     	inputWord = inputWord.toLowerCase(); // Convert word to lowercase
         for (int it1 = 0; it1 < inputWord.length(); it1++) {
             char charinp = inputWord.charAt(it1);
-            TriNodeClass node = current.childrenOfTri.get(charinp);
-            if (node == null) {
-                node = new TriNodeClass();
-                current.childrenOfTri.put(charinp, node);
-            }
-            current = node;
+            current = current.childrenOfTri.computeIfAbsent(charinp, k -> new TriNodeClass());
+//            TriNodeClass node = current.childrenOfTri.get(charinp);
+//            if (node == null) {
+//                node = new TriNodeClass();
+//                current.childrenOfTri.put(charinp, node);
+//            }
         }
         current.isWordEnd = true; // Mark the end of the inserted word
     }

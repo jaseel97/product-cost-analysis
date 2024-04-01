@@ -128,7 +128,7 @@ public class ZoloDataFormatter {
 		}
 
 		int sum = 0;
-		if (extractedData != null && extractedData.contains("+")) {
+		if (extractedData.contains("+")) {
 			String[] parts = extractedData.split("\\+");
 			for (String part : parts) {
 				sum += Integer.parseInt(part.trim());
@@ -228,26 +228,19 @@ public class ZoloDataFormatter {
         String provinceCode = jsonStringValue.substring(jsonStringValue.lastIndexOf(',') + 2, jsonStringValue.lastIndexOf('_'));
 
         // Mapping the province code to province name
-        String provinceName = mapProvinceCode(provinceCode);
 
-        return provinceName;
+        return mapProvinceCode(provinceCode);
 	}
 	
 	private static String mapProvinceCode(String provinceCode) {
         // Mapping of province codes to province names
-        switch (provinceCode) {
-            case "ON":
-                return "Ontario";
-            case "QC":
-                return "Quebec";
-            case "AB":
-                return "Alberta";
-            case "BC":
-                return "British Columbia";
-            case "NS":
-                return "Nova Scotia";
-            default:
-                return "Unknown"; // Default to "Unknown" if no mapping is found
-        }
+        return switch (provinceCode) {
+            case "ON" -> "Ontario";
+            case "QC" -> "Quebec";
+            case "AB" -> "Alberta";
+            case "BC" -> "British Columbia";
+            case "NS" -> "Nova Scotia";
+            default -> "Unknown"; // Default to "Unknown" if no mapping is found
+        };
     }
 }

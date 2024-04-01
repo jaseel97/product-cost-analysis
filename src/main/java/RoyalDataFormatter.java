@@ -56,10 +56,10 @@ public class RoyalDataFormatter {
 				gsonBuilder.toJson(propertyList, writer);
 				System.out.println("Property details written to RoyalleProperties.json successfully.");
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Error writing royale data to json!");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error reading data from royale sourec json!");
 		}
 	}
 
@@ -129,7 +129,7 @@ public class RoyalDataFormatter {
 		}
 
 		int sum = 0;
-		if (extractedData != null && extractedData.contains("+")) {
+		if (extractedData.contains("+")) {
 			String[] parts = extractedData.split("\\+");
 			for (String part : parts) {
 				sum += Integer.parseInt(part.trim());
@@ -241,21 +241,14 @@ public class RoyalDataFormatter {
 	
 	private static String mapProvinceCode(String provinceCode) {
         // Mapping of province codes to province names
-        switch (provinceCode) {
-            case "ON":
-                return "Ontario";
-            case "QC":
-                return "Quebec";
-            case "AB":
-                return "Alberta";
-            case "BC":
-                return "British Columbia";
-            case "NS":
-                return "Nova Scotia";
-            case "MB":
-                return "Manitoba";
-            default:
-                return "Unknown"; // Default to "Unknown" if no mapping is found
-        }
+        return switch (provinceCode) {
+            case "ON" -> "Ontario";
+            case "QC" -> "Quebec";
+            case "AB" -> "Alberta";
+            case "BC" -> "British Columbia";
+            case "NS" -> "Nova Scotia";
+            case "MB" -> "Manitoba";
+            default -> "Unknown"; // Default to "Unknown" if no mapping is found
+        };
     }
 }
