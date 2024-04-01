@@ -28,27 +28,26 @@ public class WebScrawlingSelenium {
 
 	public static void main(String [] args) throws Exception {
 		try {
-		setupChromeDriver();
-		//      testCrawl();
-		//      realtorCrawl();
-		//		zoloCrawl();
-		//		royallepageCrawl();
+			setupChromeDriver();
+//		      testCrawl();
+			realtorCrawl();
+			zoloCrawl();
+			royallepageCrawl();
+		} catch(TimeoutException e){
+			System.out.println("Operation took too long to load. Try again");
+		} catch(ElementNotInteractableException e){
+			System.out.println("Web element is hidden or disabled or non-interactable. Try again");
+		} catch(StaleElementReferenceException e){ //the most notorious one, daikirai
+			System.out.println("Referenced web element is no longer present. Try again");
+		} catch(WebDriverException e){
+			System.out.println("Web driver issues! Check the driver.");
+		} catch(InterruptedException e){
+			System.out.println("Thread is interrupted. Try again");
+		}  catch(NoSuchElementException e){ //another bad BAD boy
+			System.out.println("Unable to locate the web element. Try again");
+		} catch(Exception e){
+			System.out.println("Unknown Error!");
 		}
-		catch(Exception e) {
-			if(e instanceof WebDriverException)
-				System.out.println("Web driver issues! Check the driver.");
-			if(e instanceof StaleElementReferenceException) //the most notorious one, daikirai
-				System.out.println("Referenced web element is no longer present. Try again");
-			if(e instanceof InterruptedException)
-				System.out.println("Thread is interrupted. Try again");
-			if(e instanceof ElementNotInteractableException)
-				System.out.println("Web element is hidden or disabled or non-interactable. Try again");
-			if(e instanceof TimeoutException)
-				System.out.println("Operation took too long to load. Try again");
-			if(e instanceof NoSuchElementException) //another bad BAD boy
-				System.out.println("Unable to locate the web element. Try again");
-		}
-
 	}
 
 	private static void writeToJSON(JSONArray arr, String file) {
@@ -70,7 +69,7 @@ public class WebScrawlingSelenium {
 	}
 
 	public static void testCrawl() throws InterruptedException {
-		driver.get("http://www.google.com/");
+		driver.get("https://www.google.com/");
 		Thread.sleep(5000);  //let the user actually see something!
 
 		WebElement searchBox = driver.findElement(By.name("q"));

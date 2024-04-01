@@ -32,11 +32,11 @@ public class InvertedIndex {
         return current;
     }
 
-    public ArrayList<JsonElement> get(String word) {
+    public JsonArray get(String word) {
         word = word.toLowerCase();
         Node current = this.contains(word);
         if (current != null) {
-            return  new ArrayList<>(current.properties);
+            return current.properties;
         } else {
             return null;
         }
@@ -60,7 +60,7 @@ public class InvertedIndex {
         if (node.properties != null){
             node.properties.add(property);
         }else{
-            node.properties = new HashSet<>();
+            node.properties = new JsonArray();
             node.properties.add(property);
         }
     }

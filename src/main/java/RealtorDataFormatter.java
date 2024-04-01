@@ -2,7 +2,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class RealtorDataFormatter {
 			//parse JSON array of objects
 			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/realtor.json"), JsonArray.class);
 			//create a list to hold PropertyDetails objects
-			List<PropertyDetails> propertyList = new ArrayList<>();
+			List<Property> propertyList = new ArrayList<>();
 			//iterate over JSON objects
 			for (JsonElement element : jsonArray) {
 				JsonObject jsonObject = element.getAsJsonObject();
@@ -45,8 +44,8 @@ public class RealtorDataFormatter {
 					String province = getPropertyProvince(propertyValue.toString());
 
 					// Create PropertyDetails object and add it to the list
-					PropertyDetails propertyDetails = new PropertyDetails(mlsNumber, propertyName, buildingType, city, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
-					propertyList.add(propertyDetails);
+					Property property = new Property(mlsNumber, propertyName, buildingType, city, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
+					propertyList.add(property);
 				}
 			}
 

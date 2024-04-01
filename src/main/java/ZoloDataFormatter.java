@@ -22,7 +22,7 @@ public class ZoloDataFormatter {
 			//parse JSON array of objects
 			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/zolo.json"), JsonArray.class);
 			//create a list to hold PropertyDetails objects
-			List<PropertyDetails> propertyList = new ArrayList<>();
+			List<Property> propertyList = new ArrayList<>();
 			//iterate over JSON objects
 			for (JsonElement element : jsonArray) {
 				JsonObject jsonObject = element.getAsJsonObject();
@@ -43,8 +43,8 @@ public class ZoloDataFormatter {
 					String propertyCity = getPropertyCity(jsonKeyValue.toString());
 					String province = getPropertyProvince(jsonKeyValue.toString());
 					// Create PropertyDetails object and add it to the list
-					PropertyDetails propertyDetails = new PropertyDetails(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
-					propertyList.add(propertyDetails);
+					Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
+					propertyList.add(property);
 				}
 			}
 
