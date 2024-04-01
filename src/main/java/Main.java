@@ -133,44 +133,78 @@ public class Main {
 				    break;
 				case "5":
 					extractUniqueValues(propertyList, "city");
-					System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
-					String searchedCity2 = inputReader.nextLine().trim();
-					if(searchedCity2.equals(BACK))
-						break;
-					boolean isCityValidInput = validateStringInput(searchedCity2);
-					if(isCityValidInput) {
-						System.out.println("\nEnter the lower price range:");
-						String lowerPriceString2 = inputReader.nextLine().trim();
-						boolean isLowerPriceInputValid = validatePriceInput(lowerPriceString2);
-						if(isLowerPriceInputValid) {
-							System.out.println("\nEnter the higher price range:");
-							String higherPriceString = inputReader.nextLine().trim();
-							boolean isHigherPriceInputValid = validatePriceInput(higherPriceString);
-							if(isHigherPriceInputValid) {
-								System.out.println("\nEnter number of bedrooms:");
-								String noOfBedrooms = inputReader.nextLine().trim();
-								boolean validBedrooms = isValidInteger(noOfBedrooms);
-								if(validBedrooms) {
-									System.out.println("\nEnter number of bathrooms:");
-									String noOfBathrooms = inputReader.nextLine().trim();
-									boolean validBathrooms = isValidInteger(noOfBathrooms);
-									if(validBathrooms) {
-										searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString2, higherPriceString, noOfBedrooms, noOfBathrooms);
-									}
-									else
-										System.out.println("Invalid input. Please enter a valid positive number!");
-								}
-								else
-									System.out.println("Invalid input. Please enter a valid positive number!");
-							} else
-								System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+					boolean validCity = false ,validPrice = false, validBathrooms = false, validBedrooms = false;
+					boolean goBack = false;
+					String searchedCity2,lowerPriceString,higherPriceString,noOfBedrooms,noOfBathrooms;
+
+					do{
+						System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
+						searchedCity2 = inputReader.nextLine().trim();
+						if(searchedCity2.equals(BACK)) {
+							goBack = true;
+							break;
 						}
-						else
-							System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
-					}
-					else
-						System.out.println("Invalid city name. Please enter a valid city with letters only.");
-					break;
+						validCity = validateStringInput(searchedCity2);
+						if(!validCity) System.out.println("Invalid City!");
+					}while(!validCity);
+					if(goBack) break;
+
+					do{
+						System.out.println("\nEnter the lower price range (Type "+BACK+" to go back to main menu):");
+						lowerPriceString = inputReader.nextLine().trim();
+						if(lowerPriceString.equals(BACK)) {
+							goBack = true;
+							break;
+						}
+						validPrice = validatePriceInput(lowerPriceString);
+						if(!validPrice) System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+					}while(!validPrice);
+					if(goBack) break;
+
+					do{
+						System.out.println("\nEnter the higher price range (Type "+BACK+" to go back to main menu):");
+						higherPriceString = inputReader.nextLine().trim();
+						if(higherPriceString.equals(BACK)) {
+							goBack = true;
+							break;
+						}
+						validPrice = validatePriceInput(higherPriceString);
+						if(!validPrice) System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
+						BigDecimal lowerPriceRangeValue = new BigDecimal(lowerPriceString);
+						BigDecimal higherPriceRangeValue = new BigDecimal(higherPriceString);
+						if(higherPriceRangeValue.compareTo(lowerPriceRangeValue) <= 0){
+							validPrice = false;
+							System.out.println("The max price should be greater than the min price (Min : "+lowerPriceString+")!");
+						}
+					}while(!validPrice);
+					if(goBack) break;
+
+					do{
+						System.out.println("\nEnter number of bedrooms (Type "+BACK+" to go back to main menu):");
+						noOfBedrooms = inputReader.nextLine().trim();
+						if(noOfBedrooms.equals(BACK)) {
+							goBack = true;
+							break;
+						}
+						validBedrooms = isValidInteger(noOfBedrooms);
+						if(!validBedrooms) System.out.println("Invalid input. Please enter a valid positive number!");
+					}while(!validBedrooms);
+					if(goBack) break;
+
+					do{
+						System.out.println("\nEnter number of bathrooms (Type "+BACK+" to go back to main menu):");
+						noOfBathrooms = inputReader.nextLine().trim();
+						if(noOfBathrooms.equals(BACK)) {
+							goBack = true;
+							break;
+						}
+						validBathrooms = isValidInteger(noOfBathrooms);
+						if(!validBathrooms) System.out.println("Invalid input. Please enter a valid positive number!");
+					}while(!validBathrooms);
+					if(goBack) break;
+
+					searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString, higherPriceString, noOfBedrooms, noOfBathrooms);
+
 				case "6":
 					System.out.println("Exiting...");
 					break;
@@ -180,7 +214,6 @@ public class Main {
 		} while (!searchOption.equals("6"));
 		inputReader.close();
 	}
-
 	public static boolean searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor, WordCompletion wcTrie, SpellChecker spellChecker) {
 		if (propertyList != null) {
 			Map<String, Integer> cityAndProvinceFrequencyCount = FrequencyCount.frequencyOfCityAndProvince(propertyList);
@@ -271,7 +304,7 @@ public class Main {
 				// Check if the price is within the specified range
 				if (price.compareTo(lowerPriceRangeValue) >= 0 && price.compareTo(higherPriceRangeValue) <= 0) {
 					// Check if the number of bedrooms and bathrooms match the specified criteria
-					if (bedrooms == bedroomsInputValue && bathrooms == bathroomsInputValue) {
+					if ((bedrooms == bedroomsInputValue || bedrooms == 0) && (bathrooms == bathroomsInputValue || bathrooms == 0)) {
 						SearchFrequency.updateSearchFrequency(property);
 						DisplayFormatter.printPropertyDetails(property);
 						propertyCount++;
