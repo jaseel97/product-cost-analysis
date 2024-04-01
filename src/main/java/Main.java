@@ -205,7 +205,7 @@ public class Main {
 					if(goBack) break;
 
 					searchByCityPriceBedroomsAndBathrooms(propertyList, searchedCity2, lowerPriceString, higherPriceString, noOfBedrooms, noOfBathrooms);
-
+					break;
 				case "6":
 					System.out.println("Thank You for using Property Lens!");
 					break;
@@ -306,7 +306,7 @@ public class Main {
 				// Check if the price is within the specified range
 				if (price.compareTo(lowerPriceRangeValue) >= 0 && price.compareTo(higherPriceRangeValue) <= 0) {
 					// Check if the number of bedrooms and bathrooms match the specified criteria
-					if ((bedrooms == bedroomsInputValue || bedrooms == 0) && (bathrooms == bathroomsInputValue || bathrooms == 0)) {
+					if (bedrooms == bedroomsInputValue && bathrooms == bathroomsInputValue) {
 						SearchFrequency.updateSearchFrequency(property);
 						DisplayFormatter.printPropertyDetails(property);
 						propertyCount++;
