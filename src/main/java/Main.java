@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+
 public class Main {
 
 	static final String BACK="!b";
@@ -174,7 +175,12 @@ public class Main {
 
 	public static boolean searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor, WordCompletion wcTrie, SpellChecker spellChecker) {
 		if (propertyList != null) {
-			System.out.println("Properties in index with pin : "+propertyList.size());
+			Map<String, Integer> cityAndProvinceFrequencyCount = FrequencyCount.frequencyOfCityAndProvince(propertyList);
+	        for (Map.Entry<String, Integer> entry : cityAndProvinceFrequencyCount.entrySet()) {
+	            if (entry.getKey().equalsIgnoreCase(searchedInput)) {
+	                System.out.println("There are " + entry.getValue() + " listings in " + searchedInput);
+	            }
+	        }
 			for (JsonElement element : propertyList) {
 				JsonObject property = element.getAsJsonObject();
 				SearchFrequency.call(property);

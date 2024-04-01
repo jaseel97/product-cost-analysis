@@ -1,104 +1,118 @@
+import java.util.*;
 import com.google.gson.*;
 import java.io.*;
-import java.util.*;
 
-class TrieNode {
-    Map<Character, TrieNode> children;
-    boolean isEndOfWord;
+// Class representing a node in the Trie data structure
+class TriNodeClass {
+    Map<Character, TriNodeClass> childrenOfTri; // Map to store child nodes
+    boolean isWordEnd; // Flag to mark the end of a word
 
-    public TrieNode() {
-        this.children = new HashMap<>();
-        this.isEndOfWord = false;
+    // Constructor to initialize the Trie node
+    public TriNodeClass() {
+        this.childrenOfTri = new HashMap<>();
+        this.isWordEnd = false;
     }
 }
 
+// Trie data structure implementation
 class Trie {
-    final TrieNode root;
+    final TriNodeClass rootTri; // Root node of the Trie
 
+    // Constructor to initialize the Trie
     public Trie() {
-        root = new TrieNode();
+    	rootTri = new TriNodeClass();
     }
 
-    public void insert(String word) {
-        TrieNode current = root;
-        word = word.toLowerCase(); // Convert word to lowercase
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            TrieNode node = current.children.get(ch);
+    // Method to insert a word into the Trie
+    public void insertIntoTrie(String inputWord) {
+    	TriNodeClass current = rootTri;
+    	inputWord = inputWord.toLowerCase(); // Convert word to lowercase
+        for (int it1 = 0; it1 < inputWord.length(); it1++) {
+            char charinp = inputWord.charAt(it1);
+            TriNodeClass node = current.childrenOfTri.get(charinp);
             if (node == null) {
-                node = new TrieNode();
-                current.children.put(ch, node);
+                node = new TriNodeClass();
+                current.childrenOfTri.put(charinp, node);
             }
             current = node;
         }
-        current.isEndOfWord = true;
+        current.isWordEnd = true; // Mark the end of the inserted word
     }
 
+    // Method to search for a word in the Trie
     public boolean search(String word) {
-        TrieNode current = root;
+    	TriNodeClass current = rootTri;
         word = word.toLowerCase(); // Convert word to lowercase
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            TrieNode node = current.children.get(ch);
-            if (node == null) {
-                return false;
+        for (int it2 = 0; it2 < word.length(); it2++) {
+            char charInp = word.charAt(it2);
+            TriNodeClass triNode = current.childrenOfTri.get(charInp);
+            if (triNode == null) {
+                return false; // Word not found
             }
-            current = node;
+            current = triNode;
         }
-        return current.isEndOfWord;
+        return current.isWordEnd; // Return true if the word exists in the Trie
     }
 
+    // Method to check if there are words with a given prefix
     public boolean startsWith(String prefix) {
-        TrieNode current = root;
+    	TriNodeClass current = rootTri;
         prefix = prefix.toLowerCase(); // Convert prefix to lowercase
-        for (int i = 0; i < prefix.length(); i++) {
-            char ch = prefix.charAt(i);
-            TrieNode node = current.children.get(ch);
-            if (node == null) {
-                return false;
+        for (int it3 = 0; it3 < prefix.length(); it3++) {
+            char charInp = prefix.charAt(it3);
+            TriNodeClass triNode = current.childrenOfTri.get(charInp);
+            if (triNode == null) {
+                return false; // No words with the given prefix
             }
-            current = node;
+            current = triNode;
         }
-        return true;
+        return true; // Prefix found
     }
 }
 
+// Class for word completion functionality
 public class WordCompletion {
 
-    Trie trie;
+    Trie trie; // Trie object for word completion
 
+    // Constructor to initialize WordCompletion object with a Trie
     public WordCompletion(){
         this.trie = new Trie();
     }
+
+    // Main method to demonstrate word completion
     public static void main(String[] args) {
         WordCompletion wcTrie = new WordCompletion();
-        System.out.println(wcTrie.autoCompletion("toronto"));
+        System.out.println(wcTrie.autoCompletion("toronto")); // Example usage of auto-completion
     }
 
+    // Method to perform auto-completion for a given prefix
     public List<String> autoCompletion(String prefix) {
-        TrieNode current = this.trie.root;
+    	TriNodeClass currentTri = this.trie.rootTri;
         for (int i = 0; i < prefix.length(); i++) {
             char ch = prefix.charAt(i);
-            TrieNode node = current.children.get(ch);
+            TriNodeClass node = currentTri.childrenOfTri.get(ch);
             if (node == null) {
-                return Collections.emptyList();
+                return Collections.emptyList(); // No words with the given prefix
             }
-            current = node;
+            currentTri = node;
         }
         List<String> autoCompletedWords = new ArrayList<>();
-        findWordsWithPrefix(current, prefix, autoCompletedWords);
-        return autoCompletedWords;
+        findWordsWithPrefix(currentTri, prefix, autoCompletedWords);
+        return autoCompletedWords; // Return list of auto-completed words
     }
 
-    private void findWordsWithPrefix(TrieNode node, String prefix, List<String> result) {
-        if (node.isEndOfWord) {
-            result.add(prefix);
+    // Recursive method to find words with a given prefix
+    private void findWordsWithPrefix(TriNodeClass node, String prefix, List<String> result) {
+        if (node.isWordEnd) {
+            result.add(prefix); // Add the word to the result list
         }
-        for (char ch : node.children.keySet()) {
-            findWordsWithPrefix(node.children.get(ch), prefix + ch, result);
+        for (char chars : node.childrenOfTri.keySet()) {
+            findWordsWithPrefix(node.childrenOfTri.get(chars), prefix + chars, result);
         }
     }
 
+    // Method to build word completion Trie from a JSON file
     public void buildWordCompletionTrie() {
         Gson gson = new Gson();
         try {
@@ -107,17 +121,18 @@ public class WordCompletion {
             // Iterate over JSON objects
             for (JsonElement element : jsonArray) {
                 JsonObject jsonObject = element.getAsJsonObject();
+                // Insert city, province, and pincode into the Trie
                 JsonElement city = jsonObject.get("city");
                 if (city != null) {
-                    this.trie.insert(city.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(city.getAsString().toLowerCase());
                 }
                 JsonElement province = jsonObject.get("province");
                 if(province != null) {
-                    this.trie.insert(province.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(province.getAsString().toLowerCase());
                 }
                 JsonElement pincode = jsonObject.get("pincode");
                 if(pincode != null) {
-                    this.trie.insert(pincode.getAsString().toLowerCase());
+                    this.trie.insertIntoTrie(pincode.getAsString().toLowerCase());
                 }
             }
         } catch (IOException e) {
