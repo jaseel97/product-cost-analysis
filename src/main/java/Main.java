@@ -2,10 +2,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -13,7 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class Main {
-	
+
 	static final String BACK="!b";
 
 	public static void main(String[] args) {
@@ -25,7 +29,7 @@ public class Main {
 		try (FileReader reader = new FileReader("src/main/resources/CombinedProperties.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
 		} catch (Exception e) {
-			System.out.println("error : could not find json with scraped property data!");
+			System.out.println("Error : Could not find json with scraped property data!");
 			return;
 		}
 
@@ -46,6 +50,7 @@ public class Main {
 
 			switch (searchOption) {
 			case "1":
+				extractUniqueCities(propertyList, "city");
 				System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
 				String searchedCity = inputReader.nextLine();
 				if(searchedCity.equals(BACK))
@@ -57,6 +62,7 @@ public class Main {
 					System.out.println("Invalid city name. Please enter a valid city with letters only.");
 				break;
 			case "2":
+				extractUniqueCities(propertyList, "province");
 				System.out.println("\nEnter province:  (Type "+BACK+" to go back to main menu)");
 				String searchedProvince = inputReader.nextLine();
 				if(searchedProvince.equals(BACK))
@@ -101,6 +107,7 @@ public class Main {
 					System.out.println("Invalid price format. Please enter a valid price in numbers only! (Decimal points can be used)");
 				break;
 			case "5":
+				extractUniqueCities(propertyList, "city");
 				System.out.println("\nEnter city: (Type "+BACK+" to go back to main menu)");
 				String searchedCity2 = inputReader.nextLine();
 				if(searchedCity2.equals(BACK))
@@ -274,5 +281,20 @@ public class Main {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		return matcher.matches();
+	}
+	
+	public static void extractUniqueCities( JsonArray propertyList, String searchFactor) {
+		Set<String> uniqueCities = new HashSet<>();
+        for (JsonElement element : propertyList) {
+            JsonObject jsonObject = element.getAsJsonObject();
+            String city = jsonObject.get(searchFactor).getAsString();
+            uniqueCities.add(city);
+        }
+
+        // Print unique cities
+        System.out.println("\nChoose from the provided list of cities:\n");
+        for (String city : uniqueCities) {
+            System.out.println("- "+city);
+        }
 	}
 }
