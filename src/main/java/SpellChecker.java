@@ -5,6 +5,8 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -173,38 +175,41 @@ class SplayTree {
 }
 
 public class SpellChecker {
-   
-    public static String call(String searchFactor, String inputtedString) {
-    	SplayTree dicti = new SplayTree();
-    	String fileName = "src/main/resources/CombinedProperties.json";
 
-        // Load data from JSON file
+    SplayTree spellings;
+    public SpellChecker(){
+        this.spellings = new SplayTree();
+    }
+
+    public String findCorrectedSpelling(String word){
+        return this.spellings.suggestCorrection(word,3);
+    }
+
+    public void buildSpellCheckerSplayTree(){
+        Gson gson = new Gson();
         try {
-            JSONParser parser = new JSONParser();
-            JSONArray jsonProperties = (JSONArray) parser.parse(new FileReader(fileName));
-
-            // Extract inputted search parameter and insert into the dictionary
-            for (Object obj : jsonProperties) {
-                JSONObject property = (JSONObject) obj;
-                String inputSearchEntry = (String) property.get(searchFactor);
-                if(!dicti.contains(inputSearchEntry.toLowerCase())) {
-                	dicti.insert(inputSearchEntry.toLowerCase()); 
+            // Parse JSON array of objects
+            JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/CombinedProperties.json"), JsonArray.class);
+            // Iterate over JSON objects
+            for (JsonElement element : jsonArray) {
+                JsonObject jsonObject = element.getAsJsonObject();
+                JsonElement city = jsonObject.get("city");
+                if (city != null) {
+                    this.spellings.insert(city.getAsString().toLowerCase());
+                }
+                JsonElement province = jsonObject.get("province");
+                if(province != null) {
+                    this.spellings.insert(province.getAsString().toLowerCase());
+                }
+                JsonElement pincode = jsonObject.get("pincode");
+                if(pincode != null) {
+                    this.spellings.insert(pincode.getAsString().toLowerCase());
                 }
             }
-            
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-            
-        } catch (IOException | ParseException e) {
-			System.out.println("Error loading spellchecker data");
-		}
-
-        int threshold = 4; // Setting the threshold for spellchecker to 4
-        String suggestion = dicti.suggestCorrection(inputtedString, threshold);
-        return suggestion;
+        } catch (IOException e) {
+            System.out.println("Error in creating spell checker!");
+        }
     }
-
-    public static void main(String[] args) {
-    }
+    public static void main(String[] args) {}
 }
 

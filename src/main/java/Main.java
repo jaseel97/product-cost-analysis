@@ -1,15 +1,8 @@
 import java.io.FileReader;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -36,6 +29,12 @@ public class Main {
 		InvertedIndex index = new InvertedIndex();
 		index.buildIndexFromJSON(propertyList);
 
+		WordCompletion wcTrie = new WordCompletion();
+		wcTrie.buildWordCompletionTrie();
+
+		SpellChecker spellChecker = new SpellChecker();
+		spellChecker.buildSpellCheckerSplayTree();
+
 		Scanner inputReader = new Scanner(System.in);
 		String searchOption;
 		do {
@@ -57,7 +56,7 @@ public class Main {
 					break;
 				boolean isValidInput = validateStringInput(searchedCity);
 				if(isValidInput)
-					searchByProperty(propertyList, searchedCity, "city");
+					searchByProperty(index.get(searchedCity), searchedCity, "city", wcTrie, spellChecker);
 				else
 					System.out.println("Invalid city name. Please enter a valid city with letters only.");
 				break;
@@ -69,22 +68,22 @@ public class Main {
 					break;
 				boolean isValidInput2 = validateStringInput(searchedProvince);
 				if(isValidInput2)
-					searchByProperty(propertyList, searchedProvince, "province");
+					searchByProperty(index.get(searchedProvince), searchedProvince, "province", wcTrie, spellChecker);
 				else
 					System.out.println("Invalid province name. Please enter a valid province with letters only.");
 				break;
 			case "3":
-				System.out.println("\nEnter pincode: (Type "+BACK+" to go back to main menu)");
+				System.out.println("\nEnter ZIP Code: (Type "+BACK+" to go back to main menu)");
 				String searchedPincode = inputReader.nextLine();
 				if(searchedPincode.equals(BACK))
 					break;
 				boolean isValidInput3 = validatePincodeInput(searchedPincode);
 				if(isValidInput3) {
 					searchedPincode = searchedPincode.replace(" ", "");
-					searchByProperty(propertyList, searchedPincode, "pincode");
+					searchByProperty(index.get(searchedPincode), searchedPincode, "pincode", wcTrie, spellChecker);
 				}
 				else
-					System.out.println("Invalid Pincode. Please enter a valid Canadian postal code!");
+					System.out.println("Invalid ZIP Code. Please enter a valid Canadian postal code!");
 				break;
 			case "4":
 				System.out.println("\nEnter the lower price range: (Type "+BACK+" to go back to main menu)");
@@ -156,31 +155,29 @@ public class Main {
 		inputReader.close();
 	}
 
-	public static void searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor) {
-		int propertyCount = 0;
-		for (JsonElement element : propertyList) {
-			JsonObject property = element.getAsJsonObject();
-			JsonElement cityElement = property.get(searchFactor);
-			if (cityElement != null && cityElement.getAsString().equalsIgnoreCase(searchedInput)) {
+	public static void searchByProperty(JsonArray propertyList, String searchedInput, String searchFactor, WordCompletion wcTrie, SpellChecker spellChecker) {
+		if (propertyList != null) {
+			System.out.println("Properties in index with pin : "+propertyList.size());
+			for (JsonElement element : propertyList) {
+				JsonObject property = element.getAsJsonObject();
 				SearchFrequency.call(property);
 				DisplayFormatter.printPropertyDetails(property);
-				propertyCount++;
-			} 
-		}
-		if(propertyCount == 0) {
-			List<String> autoCompletedWords = wordCompletion2.call(searchFactor, searchedInput);
+			}
+		} else {
+			System.out.println("Could not find : "+searchedInput);
+			List<String> autoCompletedWords = wcTrie.autoCompletion(searchedInput);
 			if (autoCompletedWords.isEmpty()) {
-				String suggestion = SpellChecker.call(searchFactor, searchedInput);
-				if(suggestion != null) {
-					System.out.println("Did you mean: "+suggestion.substring(0, 1).toUpperCase() + suggestion.substring(1));
-				}
-				else
-					System.out.println("No property found with the provided "+searchFactor+"!");
+				String suggestion = spellChecker.findCorrectedSpelling(searchedInput);
+				if (suggestion != null) {
+					if(searchFactor.equals("pincode")) System.out.println("Did you mean: " + suggestion.toUpperCase());
+					else System.out.println("Did you mean: " + suggestion.substring(0, 1).toUpperCase() + suggestion.substring(1));
+				} else
+					System.out.println("No property found with the provided " + searchFactor + "!");
 			} else {
 				System.out.print("Did you mean: ");
 				//To print word alone if single suggestion
 				if (autoCompletedWords.size() == 1) {
-					String completedWord = autoCompletedWords.get(0);
+					String completedWord = autoCompletedWords.getFirst();
 					System.out.println(completedWord.substring(0, 1).toUpperCase() + completedWord.substring(1));
 				} else {
 					// to print words separated by a comma if multiple suggestions are present
@@ -225,9 +222,9 @@ public class Main {
 						propertyCount++;
 					}
 				}
-			} 
+			}
 		}
-		if(propertyCount == 0) 
+		if(propertyCount == 0)
 			System.out.println("No properties found with the provided criteria!");
 	}
 
@@ -282,7 +279,7 @@ public class Main {
 		Matcher matcher = pattern.matcher(input);
 		return matcher.matches();
 	}
-	
+
 	public static void extractUniqueCities( JsonArray propertyList, String searchFactor) {
 		Set<String> uniqueCities = new HashSet<>();
         for (JsonElement element : propertyList) {

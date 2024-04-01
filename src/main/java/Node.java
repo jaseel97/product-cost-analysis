@@ -1,8 +1,6 @@
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class Node {
     public final HashMap<Character, Node> children;
