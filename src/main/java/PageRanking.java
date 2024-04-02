@@ -10,14 +10,18 @@ import java.math.BigDecimal;
 import java.util.PriorityQueue;
 
 public class PageRanking {
-	public static void main(String [] args) throws Exception, JsonIOException, FileNotFoundException {
-        Gson gson = new Gson();  // gson object for JSON parsing
-        JsonArray propertyList = null; //variable JsonArray to hold property data
+    public static void main(String[] args) {
+        Gson gson = new Gson(); // gson object for JSON parsing
+        JsonArray propertyList = null; // variable JsonArray to hold property data
+
         try (FileReader reader = new FileReader("src/main/resources/CombinedProperties.json")) {
             propertyList = gson.fromJson(reader, JsonArray.class); // Parsing JSON file into a JsonArray using Gson
+        } catch (FileNotFoundException e) {
+            System.out.println("There is a error as we could not find file 'src/main/resources/CombinedProperties.json'.");
+        } catch (JsonIOException e) {
+            System.out.println("There is a error as we could Could not parse JSON data from the file.");
         } catch (Exception e) {
-            System.out.println("Error : Could not find json with scraped property data!");
-            return;
+            System.out.println("An error occured: " + e.getMessage());
         }
 //        InvertedIndex index = new InvertedIndex(); // InvertedIndex class instance
 //        index.buildIndexFromJSON(propertyList); // Building inverted index from the parsed JSON property data
@@ -29,7 +33,7 @@ public class PageRanking {
             System.out.println(rankedProperties.get(ctr).toString());
             ctr++;
         }
-	}
+    }
 	
 	// Method for ranking properties based on search frequency and price
 	public static JsonArray rankProperties(JsonArray allProperties) {

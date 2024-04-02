@@ -2,12 +2,41 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CombineJsonFiles {
     public static void main(String[] args) {
+    	Gson gson = new Gson();
+    	
+		try {
+			//parse JSON array of scraped data from Realtor
+			JsonArray realtorScrapedData = gson.fromJson(new FileReader("src/main/resources/realtor.json"), JsonArray.class);
+			RealtorDataFormatter.call(realtorScrapedData);	
+			
+			//parse JSON array of scraped data from Zolo
+			JsonArray zoloScrapedData = gson.fromJson(new FileReader("src/main/resources/zolo.json"), JsonArray.class);
+			ZoloDataFormatter.call(zoloScrapedData);
+			
+			//parse JSON array of scraped data from Royallepage
+			JsonArray royalleScrapedData = gson.fromJson(new FileReader("src/main/resources/royalle.json"), JsonArray.class);
+			RoyalDataFormatter.call(royalleScrapedData);
+			
+		} catch (JsonSyntaxException e) {
+			System.out.println("Error parsing JSON data!");
+		} catch (JsonIOException e) {
+			System.out.println("Error loading JSON file!");
+		} catch (FileNotFoundException e) {
+			System.out.println("Error in JSON file directory!");
+		} catch (Exception e) {
+			System.out.println("Unknown error!");
+		}
         // Paths to the JSON files
         String[] filePaths = {"src/main/resources/RealtorProperties.json", "src/main/resources/ZoloProperties.json", "src/main/resources/RoyalleProperties.json"};
 
