@@ -17,49 +17,41 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class RoyalDataFormatter {
-	public static void main(String[] args) {
-		Gson gson = new Gson();
+	public static void call(JsonArray ScrapedData) throws IOException {
 
-		try {
-			//parse JSON array of objects
-			JsonArray jsonArray = gson.fromJson(new FileReader("src/main/resources/royalle.json"), JsonArray.class);
-			//create a list to hold PropertyDetails objects
-			List<Property> propertyList = new ArrayList<>();
-			//iterate over JSON objects
-			for (JsonElement element : jsonArray) {
-				JsonObject jsonObject = element.getAsJsonObject();
-				//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
-				for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-					String jsonKeyValue = entry.getKey();
-					JsonElement propertyValue = entry.getValue();
-					String PropertyValueString = propertyValue.toString();
-					String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
-					String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
-					BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
-					String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
-					String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
-					int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
-					int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
-					String description = getPropertyDescription(replacedPropertyValueString);
-					String buildingType = getPropertyBuildingType(replacedPropertyValueString);
-					String propertyCity = getPropertyCity(jsonKeyValue.toString());
-					String province = getPropertyProvince(jsonKeyValue.toString());
-					// Create PropertyDetails object and add it to the list
-					Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
-					propertyList.add(property);
-				}
+		List<Property> propertyList = new ArrayList<>();
+		//iterate over JSON objects
+		for (JsonElement element : ScrapedData) {
+			JsonObject jsonObject = element.getAsJsonObject();
+			//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
+			for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+				String jsonKeyValue = entry.getKey();
+				JsonElement propertyValue = entry.getValue();
+				String PropertyValueString = propertyValue.toString();
+				String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
+				String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
+				BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
+				String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
+				String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
+				int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
+				int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
+				String description = getPropertyDescription(replacedPropertyValueString);
+				String buildingType = getPropertyBuildingType(replacedPropertyValueString);
+				String propertyCity = getPropertyCity(jsonKeyValue.toString());
+				String province = getPropertyProvince(jsonKeyValue.toString());
+				// Create PropertyDetails object and add it to the list
+				Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
+				propertyList.add(property);
 			}
+		}
 
-			//Write propertyList to JSON file
-			Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
-			try (FileWriter writer = new FileWriter("src/main/resources/RoyalleProperties.json")) {
-				gsonBuilder.toJson(propertyList, writer);
-				System.out.println("Property details written to RoyalleProperties.json successfully.");
-			} catch (IOException e) {
-				System.out.println("Error writing royale data to json!");
-			}
+		//Write propertyList to JSON file
+		Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
+		try (FileWriter writer = new FileWriter("src/main/resources/RoyalleProperties.json")) {
+			gsonBuilder.toJson(propertyList, writer);
+			System.out.println("Property details written to RoyalleProperties.json successfully.");
 		} catch (IOException e) {
-			System.out.println("Error reading data from royale sourec json!");
+			System.out.println("Error writing royale data to json!");
 		}
 	}
 
@@ -103,7 +95,7 @@ public class RoyalDataFormatter {
 
 	private static String FindMLSNumberIdentifier(String jsonStringValue) {
 		String patternString = "\\|MLS�\\s*#\\s*([A-Za-z0-9]+)\\|";
-//		String patternString = "MLS�#\\|([A-Za-z0-9]+)\\|";
+		//		String patternString = "MLS�#\\|([A-Za-z0-9]+)\\|";
 		Pattern mlsPattern = Pattern.compile(patternString);
 		Matcher matcher = mlsPattern.matcher(jsonStringValue);
 		String mlsNumber = null;
@@ -146,15 +138,15 @@ public class RoyalDataFormatter {
 		String pattern = "\\|(\\d+)\\s+Baths\\|";
 		Pattern postalCodePattern = Pattern.compile(pattern);
 		Matcher matcher = postalCodePattern.matcher(jsonStringValue);
-		
+
 		if(matcher.find()) {
 			extractedData = matcher.group(1);
 		}
-		
+
 		if (extractedData == null) {
 			return 0; // Return 0 if extractedData is null
 		}
-		
+
 		int sum = 0;
 		if (extractedData.contains("+")) {
 			String[] parts = extractedData.split("\\+");
@@ -193,28 +185,28 @@ public class RoyalDataFormatter {
 			return "House";
 	}
 
-//	private static float getNumberOfStoreys(String jsonStringValue) {
-//		float numberOfStoreys = 0;
-//		Pattern pattern = Pattern.compile("Storeys\\\\n(.+?)\\\\n");
-//		Matcher matcher = pattern.matcher(jsonStringValue);
-//
-//		if (matcher.find()) {
-//			String storeys = matcher.group(1).trim();
-//			numberOfStoreys = Float.parseFloat(storeys);
-//		}
-//		return numberOfStoreys;
-//	}
-//
-//	private static double getSqftAreaOfProperty(String jsonStringValue) {
-//		double propertyArea = 0;
-//		Pattern pattern = Pattern.compile("\\\\n([0-9.]+)\\s*sqft");
-//		Matcher matcher = pattern.matcher(jsonStringValue);
-//		if (matcher.find()) {
-//			String areaMeasurementString = matcher.group(1).trim();
-//			propertyArea = Double.parseDouble(areaMeasurementString);
-//		} 
-//		return propertyArea;
-//	}
+	//	private static float getNumberOfStoreys(String jsonStringValue) {
+	//		float numberOfStoreys = 0;
+	//		Pattern pattern = Pattern.compile("Storeys\\\\n(.+?)\\\\n");
+	//		Matcher matcher = pattern.matcher(jsonStringValue);
+	//
+	//		if (matcher.find()) {
+	//			String storeys = matcher.group(1).trim();
+	//			numberOfStoreys = Float.parseFloat(storeys);
+	//		}
+	//		return numberOfStoreys;
+	//	}
+	//
+	//	private static double getSqftAreaOfProperty(String jsonStringValue) {
+	//		double propertyArea = 0;
+	//		Pattern pattern = Pattern.compile("\\\\n([0-9.]+)\\s*sqft");
+	//		Matcher matcher = pattern.matcher(jsonStringValue);
+	//		if (matcher.find()) {
+	//			String areaMeasurementString = matcher.group(1).trim();
+	//			propertyArea = Double.parseDouble(areaMeasurementString);
+	//		} 
+	//		return propertyArea;
+	//	}
 
 	private static String getPropertyCity(String jsonStringValue) {
 		String propertyCity = null;
@@ -227,28 +219,28 @@ public class RoyalDataFormatter {
 
 	public static String getPropertyProvince(String jsonStringValue) {
 		String province = null;
-        String pattern = ",\\s*([A-Z]{2}),"; // Match the province code consisting of two uppercase letters
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(jsonStringValue);
+		String pattern = ",\\s*([A-Z]{2}),"; // Match the province code consisting of two uppercase letters
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(jsonStringValue);
 
-        if (matcher.find()) {
-            province = matcher.group(1);
-        } else {
-            province = "Province code not found";
-        }
-        return mapProvinceCode(province);
-    }
-	
+		if (matcher.find()) {
+			province = matcher.group(1);
+		} else {
+			province = "Province code not found";
+		}
+		return mapProvinceCode(province);
+	}
+
 	private static String mapProvinceCode(String provinceCode) {
-        // Mapping of province codes to province names
-        return switch (provinceCode) {
-            case "ON" -> "Ontario";
-            case "QC" -> "Quebec";
-            case "AB" -> "Alberta";
-            case "BC" -> "British Columbia";
-            case "NS" -> "Nova Scotia";
-            case "MB" -> "Manitoba";
-            default -> "Unknown"; // Default to "Unknown" if no mapping is found
-        };
-    }
+		// Mapping of province codes to province names
+		return switch (provinceCode) {
+		case "ON" -> "Ontario";
+		case "QC" -> "Quebec";
+		case "AB" -> "Alberta";
+		case "BC" -> "British Columbia";
+		case "NS" -> "Nova Scotia";
+		case "MB" -> "Manitoba";
+		default -> "Unknown"; // Default to "Unknown" if no mapping is found
+		};
+	}
 }
