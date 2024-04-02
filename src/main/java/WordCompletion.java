@@ -150,7 +150,14 @@ public class WordCompletion {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error in creating word completion trie!");
+            // Handle file IO exception
+            System.out.println("Error reading the JSON file: " + e.getMessage());
+        } catch (JsonParseException e) {
+            // Handle JSON parsing exception
+            System.out.println("Error parsing JSON: " + e.getMessage());
+        } catch (Exception e) {
+            // Handle other exceptions
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }
