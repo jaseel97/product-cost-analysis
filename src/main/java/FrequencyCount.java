@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 public class FrequencyCount {
 	//Method to count the frequency of attribute values within the JSON array and returns a Map where keys are strings and values are integers.
     public static Map<String, Integer> countInJson(JsonArray jsonArray, String attributeName) {
-        if (jsonArray == null || jsonArray.isJsonNull() || jsonArray.isEmpty() || attributeName == null || attributeName.isEmpty()) {
+        if (jsonArray.isEmpty() || attributeName.isEmpty()) {
             throw new IllegalArgumentException("The provided JSON array is empty or the attribute name is empty.");
         }		// Checking whether the JSON array is  empty or the attribute name is empty, Checks for invalid input and throws error message.
 
@@ -33,10 +33,18 @@ public class FrequencyCount {
     
     // Method takes input of JsonArray and returns cityfrequencycount map and provincefrequencycount map
     public static Map<String, Integer> frequencyOfCityAndProvince(JsonArray ArrayOfJson) {
-        Map<String, Integer> mapOfCityFrequencyCount = countInJson(ArrayOfJson, "city"); //Calls countInJson Method for city
-        Map<String, Integer> mapOfProvinceFrequencyCount = countInJson(ArrayOfJson, "province"); //Calls countInJson Method for province
+    	try {
+            // Calls countInJson Method for city and province respectively
+            Map<String, Integer> mapOfCityFrequencyCount = countInJson(ArrayOfJson, "city");
+            Map<String, Integer> mapOfProvinceFrequencyCount = countInJson(ArrayOfJson, "province");
 
-        return mergeMaps(mapOfCityFrequencyCount, mapOfProvinceFrequencyCount);
+            // Merge the frequency counts of city and province
+            return mergeMaps(mapOfCityFrequencyCount, mapOfProvinceFrequencyCount);
+        } catch (IllegalArgumentException e) {
+            // Print error message if exception occurs
+            System.err.println("There is an error: " + e.getMessage());
+            return new HashMap<>(); // Returning an empty map
+        }
     }
     
     // Method to merge two maps

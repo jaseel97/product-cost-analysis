@@ -268,14 +268,16 @@ public class Main {
 
 	public static void displayInBatches(JsonArray properties){
 		Scanner sc = new Scanner(System.in);
-		int batch_ctr = 0, shown_so_far = 0;
-		for (JsonElement element : properties) {
+		int batch_ctr = 0, shown_so_far = 0, index = 0;
+		while(index<properties.size()) {
 			if(batch_ctr < DISPLAY_BATCH_SIZE) {
+				JsonElement element = properties.get(index);
 				JsonObject property = element.getAsJsonObject();
 				SearchFrequency.updateSearchFrequency(property);
 				DisplayFormatter.printPropertyDetails(property);
 				batch_ctr++;
 				shown_so_far++;
+				index++;
 			}else {
 				System.out.println((properties.size() - shown_so_far) + " properties left");
 				System.out.print("Enter anything to list more entries, !b to go back to menu : ");
@@ -289,6 +291,7 @@ public class Main {
 	}
 	public static void searchByCityPriceBedroomsAndBathrooms(JsonArray propertyList, String cityInput, String lowerPriceString2, String higherPriceString, String noOfBedrooms, String noOfBathrooms) {
 		int propertyCount = 0;
+		JsonArray matchedProperties = new JsonArray();
 		BigDecimal lowerPriceRangeValue = new BigDecimal(lowerPriceString2);
 		BigDecimal higherPriceRangeValue = new BigDecimal(higherPriceString);
 		int bedroomsInputValue = Integer.parseInt(noOfBedrooms);
@@ -310,7 +313,8 @@ public class Main {
 					// Check if the number of bedrooms and bathrooms match the specified criteria
 					if (bedrooms == bedroomsInputValue && bathrooms == bathroomsInputValue) {
 						SearchFrequency.updateSearchFrequency(property);
-						DisplayFormatter.printPropertyDetails(property);
+//						DisplayFormatter.printPropertyDetails(property);
+						matchedProperties.add(property);
 						propertyCount++;
 					}
 				}
@@ -318,9 +322,13 @@ public class Main {
 		}
 		if(propertyCount == 0)
 			System.out.println("No properties found with the provided criteria!");
+		else{
+			displayInBatches(matchedProperties);
+		}
 	}
 
 	public static void searchByPriceRange(JsonArray propertyList, BigDecimal lowerPriceInput, BigDecimal higherPriceInput) {
+		JsonArray matchedProperties = new JsonArray();
 		int propertyCount = 0;
 		for (JsonElement element : propertyList) {
 			JsonObject property = element.getAsJsonObject();
@@ -329,13 +337,16 @@ public class Main {
 				BigDecimal propertyPrice = priceElement.getAsBigDecimal();
 				if (propertyPrice.compareTo(lowerPriceInput) >= 0 && propertyPrice.compareTo(higherPriceInput) <= 0) {
 					SearchFrequency.updateSearchFrequency(property);
-					DisplayFormatter.printPropertyDetails(property);
+//					DisplayFormatter.printPropertyDetails(property);
+					matchedProperties.add(property);
 					propertyCount++;
 				}
 			}
 		}
 		if (propertyCount == 0) {
 			System.out.println("No property found in the provided price range!");
+		}else{
+			displayInBatches(matchedProperties);
 		}
 	}
 
