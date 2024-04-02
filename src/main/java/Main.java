@@ -29,8 +29,7 @@ public class Main {
 			return;
 		}
 
-		InvertedIndex index = new InvertedIndex();
-		index.buildIndexFromJSON(propertyList);
+		InvertedIndexContainer.initIndices(propertyList);
 
 		WordCompletion wcTrie = new WordCompletion();
 		wcTrie.buildWordCompletionTrie();
@@ -63,7 +62,7 @@ public class Main {
 							break;
 						boolean isValidInput = validateStringInput(searchedCity);
 						if(isValidInput) {
-							isValidCityEntered = searchByProperty(index.get(searchedCity), searchedCity.toLowerCase(), "city", wcTrie, spellChecker);
+							isValidCityEntered = searchByProperty(InvertedIndexContainer.indices[0].get(searchedCity), searchedCity.toLowerCase(), "city", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid city name. Please enter a valid city with letters only.");
 					}while(!isValidCityEntered);
@@ -78,7 +77,7 @@ public class Main {
 							break;
 						boolean isValidInput2 = validateStringInput(searchedProvince);
 						if(isValidInput2) {
-							isValidProvinceEntered = searchByProperty(index.get(searchedProvince), searchedProvince.toLowerCase(), "province", wcTrie, spellChecker);
+							isValidProvinceEntered = searchByProperty(InvertedIndexContainer.indices[1].get(searchedProvince), searchedProvince.toLowerCase(), "province", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid province name. Please enter a valid province with letters only.");
 					}while(!isValidProvinceEntered);
@@ -96,7 +95,7 @@ public class Main {
 						if(isValidInput3) {
 							isValidPincodeEntered = true;
 							searchedPincode = searchedPincode.replace(" ", "");
-							isValidPincodeEntered = searchByProperty(index.get(searchedPincode), searchedPincode.toLowerCase(), "pincode", wcTrie, spellChecker);
+							isValidPincodeEntered = searchByProperty(InvertedIndexContainer.indices[2].get(searchedPincode), searchedPincode.toLowerCase(), "pincode", wcTrie, spellChecker);
 						}
 						else System.out.println("Invalid Pincode. Please enter a valid Canadian postal code!");
 					} while(!isValidPincodeEntered);
@@ -235,7 +234,7 @@ public class Main {
 			return true;
 		} else {
 			System.out.println("Could not find : "+searchedInput);
-			List<String> autoCompletedWords = wcTrie.autoCompletion(searchedInput);
+			List<String> autoCompletedWords = wcTrie.autoCompletion(searchedInput,searchFactor);
 			if (autoCompletedWords.isEmpty()) {
 				String suggestion = spellChecker.findCorrectedSpelling(searchedInput,searchFactor);
 				if (suggestion != null) {

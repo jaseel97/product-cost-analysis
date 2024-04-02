@@ -73,22 +73,32 @@ class Trie {
 // Class for word completion functionality
 public class WordCompletion {
 
-    Trie trie; // Trie object for word completion
+    static Trie[] tries; // Trie object for word completion
 
     // Constructor to initialize WordCompletion object with a Trie
-    public WordCompletion(){
-        this.trie = new Trie();
-    }
+//    public WordCompletion(){
+//        tries = new Trie[3];
+//        this.tries[0] = new Trie();
+//        this.tries[1] = new Trie();
+//        this.tries[2] = new Trie();
+//    }
 
     // Main method to demonstrate word completion
     public static void main(String[] args) {
         WordCompletion wcTrie = new WordCompletion();
-        System.out.println(wcTrie.autoCompletion("toronto")); // Example usage of auto-completion
+        buildWordCompletionTrie();
+        System.out.println(wcTrie.autoCompletion("manitoba","city")); // Example usage of auto-completion
     }
 
     // Method to perform auto-completion for a given prefix
-    public List<String> autoCompletion(String prefix) {
-    	TriNodeClass currentTri = this.trie.rootTri;
+    public List<String> autoCompletion(String prefix, String searchFactor) {
+        int idx = switch (searchFactor) {
+            case "city" -> 0;
+            case "province" -> 1;
+            case "pincode" -> 2;
+            default -> 0;
+        };
+        TriNodeClass currentTri = tries[idx].rootTri;
         for (int i = 0; i < prefix.length(); i++) {
             char ch = prefix.charAt(i);
             TriNodeClass node = currentTri.childrenOfTri.get(ch);
@@ -113,7 +123,11 @@ public class WordCompletion {
     }
 
     // Method to build word completion Trie from a JSON file
-    public void buildWordCompletionTrie() {
+    public static void buildWordCompletionTrie() {
+        tries = new Trie[3];
+        tries[0] = new Trie();
+        tries[1] = new Trie();
+        tries[2] = new Trie();
         Gson gson = new Gson();
         try {
             // Parse JSON array of objects
@@ -124,15 +138,15 @@ public class WordCompletion {
                 // Insert city, province, and pincode into the Trie
                 JsonElement city = jsonObject.get("city");
                 if (city != null) {
-                    this.trie.insertIntoTrie(city.getAsString().toLowerCase());
+                    tries[0].insertIntoTrie(city.getAsString().toLowerCase());
                 }
                 JsonElement province = jsonObject.get("province");
                 if(province != null) {
-                    this.trie.insertIntoTrie(province.getAsString().toLowerCase());
+                    tries[1].insertIntoTrie(province.getAsString().toLowerCase());
                 }
                 JsonElement pincode = jsonObject.get("pincode");
                 if(pincode != null) {
-                    this.trie.insertIntoTrie(pincode.getAsString().toLowerCase());
+                    tries[2].insertIntoTrie(pincode.getAsString().toLowerCase());
                 }
             }
         } catch (IOException e) {

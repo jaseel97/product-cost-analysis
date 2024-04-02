@@ -19,10 +19,11 @@ public class PageRanking {
             System.out.println("Error : Could not find json with scraped property data!");
             return;
         }
-        InvertedIndex index = new InvertedIndex(); // InvertedIndex class instance
-        index.buildIndexFromJSON(propertyList); // Building inverted index from the parsed JSON property data
+//        InvertedIndex index = new InvertedIndex(); // InvertedIndex class instance
+//        index.buildIndexFromJSON(propertyList); // Building inverted index from the parsed JSON property data
+        InvertedIndexContainer.initIndices(propertyList);
 
-        JsonArray rankedProperties = PageRanking.rankProperties(index.get("toronto"));
+        JsonArray rankedProperties = PageRanking.rankProperties(InvertedIndexContainer.indices[0].get("toronto"));
         int ctr = 0;
         while (ctr < Math.min(20,rankedProperties.size())){
             System.out.println(rankedProperties.get(ctr).toString());
