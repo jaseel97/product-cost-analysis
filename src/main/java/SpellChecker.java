@@ -217,9 +217,11 @@ public class SpellChecker {
             }
             
         } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
+            System.out.println("Error: File not found!");
         } catch (JsonParseException e) {
-            System.out.println("Error parsing JSON: " + e.getMessage());
+            System.out.println("Error parsing json!");
+        } catch (Exception e) {
+            System.out.println("Unknown error!");
         }
     }
 }

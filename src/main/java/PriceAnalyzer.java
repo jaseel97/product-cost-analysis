@@ -51,8 +51,12 @@ public class PriceAnalyzer {
                     priceMetrics.get("pincode").put(value,updatedMetrics);
                 }
             }
-        }catch (IOException e){
+        } catch (JsonParseException e) {
+            System.out.println("Error parsing JSON file.");
+        } catch (IOException e) {
             System.out.println("Error reading property json for analysis.");
+        } catch (Exception e) {
+        	System.out.println("Unknown error!");
         }
     }
 

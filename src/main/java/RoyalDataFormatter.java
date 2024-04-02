@@ -18,40 +18,43 @@ import com.google.gson.JsonObject;
 
 public class RoyalDataFormatter {
 	public static void call(JsonArray ScrapedData) throws IOException {
-
-		List<Property> propertyList = new ArrayList<>();
-		//iterate over JSON objects
-		for (JsonElement element : ScrapedData) {
-			JsonObject jsonObject = element.getAsJsonObject();
-			//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
-			for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-				String jsonKeyValue = entry.getKey();
-				JsonElement propertyValue = entry.getValue();
-				String PropertyValueString = propertyValue.toString();
-				String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
-				String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
-				BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
-				String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
-				String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
-				int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
-				int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
-				String description = getPropertyDescription(replacedPropertyValueString);
-				String buildingType = getPropertyBuildingType(replacedPropertyValueString);
-				String propertyCity = getPropertyCity(jsonKeyValue.toString());
-				String province = getPropertyProvince(jsonKeyValue.toString());
-				// Create PropertyDetails object and add it to the list
-				Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
-				propertyList.add(property);
+		try {
+			List<Property> propertyList = new ArrayList<>();
+			//iterate over JSON objects
+			for (JsonElement element : ScrapedData) {
+				JsonObject jsonObject = element.getAsJsonObject();
+				//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
+				for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+					String jsonKeyValue = entry.getKey();
+					JsonElement propertyValue = entry.getValue();
+					String PropertyValueString = propertyValue.toString();
+					String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
+					String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
+					BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
+					String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
+					String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
+					int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
+					int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
+					String description = getPropertyDescription(replacedPropertyValueString);
+					String buildingType = getPropertyBuildingType(replacedPropertyValueString);
+					String propertyCity = getPropertyCity(jsonKeyValue.toString());
+					String province = getPropertyProvince(jsonKeyValue.toString());
+					// Create PropertyDetails object and add it to the list
+					Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
+					propertyList.add(property);
+				}
 			}
-		}
 
-		//Write propertyList to JSON file
-		Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
-		try (FileWriter writer = new FileWriter("src/main/resources/RoyalleProperties.json")) {
-			gsonBuilder.toJson(propertyList, writer);
-			System.out.println("Property details written to RoyalleProperties.json successfully.");
-		} catch (IOException e) {
-			System.out.println("Error writing royale data to json!");
+			//Write propertyList to JSON file
+			Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
+			try (FileWriter writer = new FileWriter("src/main/resources/RoyalleProperties.json")) {
+				gsonBuilder.toJson(propertyList, writer);
+				System.out.println("Property details written to RoyalleProperties.json successfully.");
+			} catch (IOException e) {
+				System.out.println("Error writing data to json!");
+			}
+		} catch (Exception e) {
+			System.out.println("Unknown error!");
 		}
 	}
 

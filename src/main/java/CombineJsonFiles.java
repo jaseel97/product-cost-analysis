@@ -61,8 +61,12 @@ public class CombineJsonFiles {
                         uniqueIds.add(id);
                     }
                 }
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+            	System.out.println("Error reading from the file!");
+            } catch (JSONException e) {
+               System.out.println("Error in JSON parsing!");
+            } catch (Exception e) {
+                System.out.println("Unknown error!");
             }
         }
 

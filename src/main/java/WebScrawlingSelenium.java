@@ -37,13 +37,13 @@ public class WebScrawlingSelenium {
 			System.out.println("Operation took too long to load. Try again");
 		} catch(ElementNotInteractableException e){
 			System.out.println("Web element is hidden or disabled or non-interactable. Try again");
-		} catch(StaleElementReferenceException e){ //the most notorious one, daikirai
+		} catch(StaleElementReferenceException e){ 
 			System.out.println("Referenced web element is no longer present. Try again");
 		} catch(WebDriverException e){
 			System.out.println("Web driver issues! Check the driver.");
 		} catch(InterruptedException e){
 			System.out.println("Thread is interrupted. Try again");
-		}  catch(NoSuchElementException e){ //another bad BAD boy
+		}  catch(NoSuchElementException e){ 
 			System.out.println("Unable to locate the web element. Try again");
 		} catch(Exception e){
 			System.out.println("Unknown Error!");

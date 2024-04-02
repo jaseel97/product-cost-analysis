@@ -25,7 +25,9 @@ public class SearchFrequency {
                 propertyMap.put(propertyName, property);
             }
         } catch (IOException ep) {
-            System.out.println("Error loading property details from JSON file");
+            System.out.println("Error loading property details from JSON file!");
+        } catch (Exception ep) {
+            System.out.println("Unknown error!");
         }
     }
 
@@ -45,7 +47,11 @@ public class SearchFrequency {
             gson.toJson(propertiesArray, writer);
             
         } catch (IOException e) {
-            System.out.println("Error writing search frequency to JSON file");
+            System.out.println("Error writing search frequency to JSON file!");
+        } catch (NullPointerException e) {
+            System.out.println("Error: Property details are incomplete or null!");
+        } catch (Exception e) {
+            System.out.println("Unknown error occurred while updating search frequency!");
         }
     }
 }

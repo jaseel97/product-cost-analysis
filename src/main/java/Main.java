@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
@@ -24,12 +25,20 @@ public class Main {
 		JsonArray propertyList = null;
 		try (FileReader reader = new FileReader("src/main/resources/CombinedProperties.json")) {
 			propertyList = gson.fromJson(reader, JsonArray.class);
-		} catch (Exception e) {
-			System.out.println("Error : Could not find json with scraped property data!");
+		} catch (IOException e) {
+			System.out.println("Error : File cannot be read!");
+		}
+		catch (Exception e) {
+			System.out.println("Error : Unknown!");
 			return;
 		}
 
-		InvertedIndexContainer.initIndices(propertyList);
+		try {
+	        InvertedIndexContainer.initIndices(propertyList);
+	    } catch (Exception e) {
+	        System.out.println("Error: Failed to build index from JSON.");
+	        return;
+	    }
 
 		WordCompletion wcTrie = new WordCompletion();
 		wcTrie.buildWordCompletionTrie();
@@ -37,7 +46,12 @@ public class Main {
 		SpellChecker spellChecker = new SpellChecker();
 		spellChecker.buildSpellCheckerSplayTree();
 
-		PriceAnalyzer.analyzeAllListings();
+		try {
+	        PriceAnalyzer.analyzeAllListings();
+	    } catch (Exception e) {
+	        System.out.println("Error: Failed to analyze property listings.");
+	        return;
+	    }
 
 		Scanner inputReader = new Scanner(System.in);
 		String searchOption;

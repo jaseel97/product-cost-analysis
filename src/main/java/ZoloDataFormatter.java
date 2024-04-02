@@ -13,43 +13,47 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 public class ZoloDataFormatter {
 	public static void call(JsonArray ScrapedData) throws IOException {
-
-		List<Property> propertyList = new ArrayList<>();
-		//iterate over JSON objects
-		for (JsonElement element : ScrapedData) {
-			JsonObject jsonObject = element.getAsJsonObject();
-			//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
-			for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-				String jsonKeyValue = entry.getKey();
-				JsonElement propertyValue = entry.getValue();
-				String PropertyValueString = propertyValue.toString();
-				String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
-				String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
-				BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
-				String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
-				String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
-				int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
-				int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
-				String description = getPropertyDescription(replacedPropertyValueString);
-				String buildingType = getPropertyBuildingType(replacedPropertyValueString);
-				String propertyCity = getPropertyCity(jsonKeyValue.toString());
-				String province = getPropertyProvince(jsonKeyValue.toString());
-				// Create PropertyDetails object and add it to the list
-				Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
-				propertyList.add(property);
+		try {
+			List<Property> propertyList = new ArrayList<>();
+			//iterate over JSON objects
+			for (JsonElement element : ScrapedData) {
+				JsonObject jsonObject = element.getAsJsonObject();
+				//iterate through the different elements - this part. Now the whole properties per listing per city is formatted
+				for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+					String jsonKeyValue = entry.getKey();
+					JsonElement propertyValue = entry.getValue();
+					String PropertyValueString = propertyValue.toString();
+					String replacedPropertyValueString = PropertyValueString.replaceAll("\\\\n", "|");
+					String propertyName = FindPropertyNameFromString(replacedPropertyValueString);
+					BigDecimal propertyPrice = FindPropertyPriceFromString(replacedPropertyValueString);
+					String pincode = FindPropertyPincodeFromString(replacedPropertyValueString);
+					String mlsNumber = FindMLSNumberIdentifier(replacedPropertyValueString);
+					int bedrooms = getBedroomsFromListing(replacedPropertyValueString);
+					int bathrooms = getBathroomsFromListing(replacedPropertyValueString);
+					String description = getPropertyDescription(replacedPropertyValueString);
+					String buildingType = getPropertyBuildingType(replacedPropertyValueString);
+					String propertyCity = getPropertyCity(jsonKeyValue.toString());
+					String province = getPropertyProvince(jsonKeyValue.toString());
+					// Create PropertyDetails object and add it to the list
+					Property property = new Property(mlsNumber, propertyName, buildingType, propertyCity, province, pincode, propertyPrice, bedrooms, bathrooms, description, 0);
+					propertyList.add(property);
+				}
 			}
-		}
 
-		//Write propertyList to JSON file
-		Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
-		try (FileWriter writer = new FileWriter("src/main/resources/ZoloProperties.json")) {
-			gsonBuilder.toJson(propertyList, writer);
-			System.out.println("Property details written to ZoloProperties.json successfully.");
-		} catch (IOException e) {
-			System.out.println("Error writing zolo data to json!");
+			//Write propertyList to JSON file
+			Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
+			try (FileWriter writer = new FileWriter("src/main/resources/ZoloProperties.json")) {
+				gsonBuilder.toJson(propertyList, writer);
+				System.out.println("Property details written to ZoloProperties.json successfully.");
+			} catch (IOException e) {
+				System.out.println("Error writing data to json!");
+			}
+		} catch (Exception e) {
+			System.out.println("Unknown error!");
 		}
 	}
 
@@ -68,18 +72,18 @@ public class ZoloDataFormatter {
 	}
 
 	private static BigDecimal FindPropertyPriceFromString(String jsonStringValue) {
-        String patternString = "\\|\\$([\\d,]+)\\s";
-        Pattern pattern = Pattern.compile(patternString);
-        Matcher matcher = pattern.matcher(jsonStringValue);
-        BigDecimal price = null;
+		String patternString = "\\|\\$([\\d,]+)\\s";
+		Pattern pattern = Pattern.compile(patternString);
+		Matcher matcher = pattern.matcher(jsonStringValue);
+		BigDecimal price = null;
 
-        // Find and print the first match (if any)
-        if (matcher.find()) {
-            String priceStr = matcher.group(1).replaceAll(",", "");
-            price = new BigDecimal(priceStr);
-        }
-        return price;
-    }
+		// Find and print the first match (if any)
+		if (matcher.find()) {
+			String priceStr = matcher.group(1).replaceAll(",", "");
+			price = new BigDecimal(priceStr);
+		}
+		return price;
+	}
 
 	private static String FindPropertyPincodeFromString(String jsonStringValue) {
 		String pattern = "[A-Za-z]\\d[A-Za-z]\\s?\\d[A-Za-z]\\d";
@@ -137,15 +141,15 @@ public class ZoloDataFormatter {
 		String pattern = "\\s(\\d+)\\s+bath\\s";
 		Pattern postalCodePattern = Pattern.compile(pattern);
 		Matcher matcher = postalCodePattern.matcher(jsonStringValue);
-		
+
 		if(matcher.find()) {
 			extractedData = matcher.group(1);
 		}
-		
+
 		if (extractedData == null) {
 			return 0; // Return 0 if extractedData is null
 		}
-		
+
 		int sum = 0;
 		if (extractedData.contains("+")) {
 			String[] parts = extractedData.split("\\+");
@@ -183,28 +187,28 @@ public class ZoloDataFormatter {
 		return buildingType;
 	}
 
-//	private static float getNumberOfStoreys(String jsonStringValue) {
-//		float numberOfStoreys = 0;
-//		Pattern pattern = Pattern.compile("Storeys\\\\n(.+?)\\\\n");
-//		Matcher matcher = pattern.matcher(jsonStringValue);
-//
-//		if (matcher.find()) {
-//			String storeys = matcher.group(1).trim();
-//			numberOfStoreys = Float.parseFloat(storeys);
-//		}
-//		return numberOfStoreys;
-//	}
-//
-//	private static double getSqftAreaOfProperty(String jsonStringValue) {
-//		double propertyArea = 0;
-//		Pattern pattern = Pattern.compile("\\\\n([0-9.]+)\\s*sqft");
-//		Matcher matcher = pattern.matcher(jsonStringValue);
-//		if (matcher.find()) {
-//			String areaMeasurementString = matcher.group(1).trim();
-//			propertyArea = Double.parseDouble(areaMeasurementString);
-//		} 
-//		return propertyArea;
-//	}
+	//	private static float getNumberOfStoreys(String jsonStringValue) {
+	//		float numberOfStoreys = 0;
+	//		Pattern pattern = Pattern.compile("Storeys\\\\n(.+?)\\\\n");
+	//		Matcher matcher = pattern.matcher(jsonStringValue);
+	//
+	//		if (matcher.find()) {
+	//			String storeys = matcher.group(1).trim();
+	//			numberOfStoreys = Float.parseFloat(storeys);
+	//		}
+	//		return numberOfStoreys;
+	//	}
+	//
+	//	private static double getSqftAreaOfProperty(String jsonStringValue) {
+	//		double propertyArea = 0;
+	//		Pattern pattern = Pattern.compile("\\\\n([0-9.]+)\\s*sqft");
+	//		Matcher matcher = pattern.matcher(jsonStringValue);
+	//		if (matcher.find()) {
+	//			String areaMeasurementString = matcher.group(1).trim();
+	//			propertyArea = Double.parseDouble(areaMeasurementString);
+	//		} 
+	//		return propertyArea;
+	//	}
 
 	private static String getPropertyCity(String jsonStringValue) {
 		String propertyCity = null;
@@ -217,22 +221,22 @@ public class ZoloDataFormatter {
 
 	private static String getPropertyProvince(String jsonStringValue) {
 		// Extracting the province code from the input string
-        String provinceCode = jsonStringValue.substring(jsonStringValue.lastIndexOf(',') + 2, jsonStringValue.lastIndexOf('_'));
+		String provinceCode = jsonStringValue.substring(jsonStringValue.lastIndexOf(',') + 2, jsonStringValue.lastIndexOf('_'));
 
-        // Mapping the province code to province name
+		// Mapping the province code to province name
 
-        return mapProvinceCode(provinceCode);
+		return mapProvinceCode(provinceCode);
 	}
-	
+
 	private static String mapProvinceCode(String provinceCode) {
-        // Mapping of province codes to province names
-        return switch (provinceCode) {
-            case "ON" -> "Ontario";
-            case "QC" -> "Quebec";
-            case "AB" -> "Alberta";
-            case "BC" -> "British Columbia";
-            case "NS" -> "Nova Scotia";
-            default -> "Unknown"; // Default to "Unknown" if no mapping is found
-        };
-    }
+		// Mapping of province codes to province names
+		return switch (provinceCode) {
+		case "ON" -> "Ontario";
+		case "QC" -> "Quebec";
+		case "AB" -> "Alberta";
+		case "BC" -> "British Columbia";
+		case "NS" -> "Nova Scotia";
+		default -> "Unknown"; // Default to "Unknown" if no mapping is found
+		};
+	}
 }
